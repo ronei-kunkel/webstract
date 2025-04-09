@@ -1,0 +1,32 @@
+{
+    "name": "ronei-kunkel/webstract",
+    "description": "The web abstraction package",
+    "type": "library",
+    "require-dev": {
+        "pestphp/pest": "^3.8"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "RoneiKunkel\\Webstract\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\RoneiKunkel\\Webstract\\": "test/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ronei Kunkel",
+            "email": "ronei.kunkel@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
