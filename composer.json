@@ -3,7 +3,8 @@
     "description": "The web abstraction package",
     "type": "library",
     "require-dev": {
-        "pestphp/pest": "^3.8"
+        "pestphp/pest": "^3.8",
+        "mockery/mockery": "^1.6"
     },
     "license": "MIT",
     "autoload": {
@@ -23,10 +24,15 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {},
+    "require": {
+        "psr/http-message": "^2.0"
+    },
     "config": {
         "allow-plugins": {
             "pestphp/pest-plugin": true
         }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest"
     }
 }
