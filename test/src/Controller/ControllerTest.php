@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use RoneiKunkel\Webstract\Controller\Controller;
 use Test\Support\RoneiKunkel\Webstract\Controller\FakeController;
 
 test('Controller::__invoke writes to stream and returns the modified response', function () {

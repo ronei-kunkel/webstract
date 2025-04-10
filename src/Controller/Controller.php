@@ -15,5 +15,5 @@ abstract class Controller
 		protected readonly StreamInterface $streamInterface,
 	) {}
 
-	abstract public function __invoke(ServerRequestInterface $serverRequest): ResponseInterface;
+	public abstract function __invoke(ServerRequestInterface $serverRequest): ResponseInterface;
 }

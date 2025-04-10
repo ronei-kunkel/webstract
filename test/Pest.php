@@ -6,7 +6,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use RoneiKunkel\Webstract\Controller\ApiController;
 use Test\RoneiKunkel\Webstract\TestCase;
-use Test\Support\RoneiKunkel\Webstract\Session\FakeSessionManager;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +20,8 @@ use Test\Support\RoneiKunkel\Webstract\Session\FakeSessionManager;
 
 pest()
     // ->extend(TestCase::class)
+    // ->beforeAll(function () {
+    // })
     ->beforeEach(function () {
         $this->psr17Factory = new Psr17Factory();
         $this->response = $this->psr17Factory->createResponse();
@@ -31,12 +32,6 @@ pest()
             $this->psr17Factory,
             $this->psr17Factory,
         ))->fromGlobals();
-        $this->session = new FakeSessionManager();
-        $this->session->create();
-    });
-pest()
-    ->afterEach(function () {
-        $this->session->destroy();
     });
 
 /*
