@@ -12,6 +12,7 @@ interface SessionHandlerInterface
 	/**
 	 * @param SessionKeyInterface $key
 	 * @throws SessionProviderUnreachableException
+	 * @throws SessionValueNotFoundException
 	 * @return mixed
 	 */
 	public function get(SessionKeyInterface $key): mixed;
@@ -34,6 +35,7 @@ interface SessionHandlerInterface
 
 	/**
 	 * @param SessionKeyInterface $key
+	 * @throws SessionProviderUnreachableException
 	 * @return bool
 	 */
 	public function has(SessionKeyInterface $key): bool;
@@ -46,6 +48,7 @@ interface SessionHandlerInterface
 
 	/**
 	 * @param SessionKeyInterface $key
+	 * @throws SessionProviderUnreachableException
 	 * @throws SessionValueNotFoundException
 	 * @return mixed
 	 */
@@ -54,6 +57,7 @@ interface SessionHandlerInterface
 	/**
 	 * @param SessionKeyInterface $key
 	 * @param mixed $default
+	 * @throws SessionProviderUnreachableException
 	 * @return mixed
 	 */
 	public function consumeOrDefault(SessionKeyInterface $key, mixed $default = null): mixed;

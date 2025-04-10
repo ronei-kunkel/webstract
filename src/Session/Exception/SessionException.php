@@ -4,4 +4,4 @@ declare(strict_types=1);
 
 namespace RoneiKunkel\Webstract\Session\Exception;
 
-interface SessionException {}
+class SessionException extends \Exception {}
