@@ -1,5 +1,12 @@
 <?php
 
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Nyholm\Psr7Server\ServerRequestCreator;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
+use RoneiKunkel\Webstract\Controller\ApiController;
+use Test\RoneiKunkel\Webstract\TestCase;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -11,7 +18,21 @@
 |
 */
 
-// pest()->extend(Test\RoneiKunkel\Webstract\TestCase::class)->in('Feature');
+pest()
+    // ->extend(TestCase::class)
+    // ->beforeAll(function () {
+    // })
+    ->beforeEach(function () {
+        $this->psr17Factory = new Psr17Factory();
+        $this->response = $this->psr17Factory->createResponse();
+        $this->stream = $this->psr17Factory->createStream();
+        $this->serverRequest = (new ServerRequestCreator(
+            $this->psr17Factory,
+            $this->psr17Factory,
+            $this->psr17Factory,
+            $this->psr17Factory,
+        ))->fromGlobals();
+    });
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +60,10 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function getExpectedBodyFromFilePath(string $filepath): string
 {
-    // ..
+    $stream = fopen($filepath, 'r');
+    $expectedBody = stream_get_contents($stream);
+    fclose($stream);
+    return $expectedBody;
 }

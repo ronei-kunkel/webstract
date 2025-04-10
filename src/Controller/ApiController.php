@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace RoneiKunkel\Webstract\Api;
+namespace RoneiKunkel\Webstract\Controller;
 
-use RoneiKunkel\Webstract\Controller;
 use JsonSerializable;
 use Psr\Http\Message\ResponseInterface;
+use RoneiKunkel\Webstract\Common\Controller\DownloadableResponse;
 
 abstract class ApiController extends Controller
 {
+	use DownloadableResponse;
+
 	protected function createJsonResponse(
 		array|JsonSerializable|null $content = null
 	): ResponseInterface {
@@ -17,6 +19,9 @@ abstract class ApiController extends Controller
 			$this->streamInterface->write(json_encode($content));
 		}
 
-		return $this->responseInterface->withBody($this->streamInterface)->withHeader('content-type', 'application/json');
+		return $this->responseInterface
+			->withBody($this->streamInterface)
+			->withHeader('content-type', 'application/json')
+			->withStatus(200);
 	}
 }

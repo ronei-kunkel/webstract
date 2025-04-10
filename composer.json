@@ -4,7 +4,9 @@
     "type": "library",
     "require-dev": {
         "pestphp/pest": "^3.8",
-        "mockery/mockery": "^1.6"
+        "mockery/mockery": "^1.6",
+        "nyholm/psr7": "^1.8",
+        "nyholm/psr7-server": "^1.1"
     },
     "license": "MIT",
     "autoload": {
@@ -14,7 +16,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Test\\RoneiKunkel\\Webstract\\": "test/"
+            "Test\\RoneiKunkel\\Webstract\\": "test/",
+            "Test\\Support\\RoneiKunkel\\Webstract\\": "test/support/"
         }
     },
     "authors": [
@@ -33,6 +36,6 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/pest"
+        "test": "vendor/bin/pest --test-directory test"
     }
 }
