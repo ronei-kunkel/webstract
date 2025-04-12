@@ -6,7 +6,7 @@ namespace RoneiKunkel\Webstract\Controller;
 
 use JsonSerializable;
 use Psr\Http\Message\ResponseInterface;
-use RoneiKunkel\Webstract\Common\Controller\DownloadableResponse;
+use RoneiKunkel\Webstract\Controller\DownloadableResponse;
 
 abstract class ApiController extends Controller
 {

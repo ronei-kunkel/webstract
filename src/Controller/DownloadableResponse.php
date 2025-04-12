@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace RoneiKunkel\Webstract\Common\Controller;
+namespace RoneiKunkel\Webstract\Controller;
 
 use Psr\Http\Message\ResponseInterface;
+use RoneiKunkel\Webstract\Common\HttpContentType;
 
 trait DownloadableResponse
 {
@@ -16,7 +17,7 @@ trait DownloadableResponse
 
 		$stream = fopen($filePath, 'r');
 		$filename = preg_replace('/[^A-Za-z0-9\-_\.]/', '_', basename($filePath));
-		$contentType = ContentType::fromFilename($filename);
+		$contentType = HttpContentType::fromFilename($filename);
 
 		if ($contentType === null) {
 			return $this->responseInterface->withStatus(500);
