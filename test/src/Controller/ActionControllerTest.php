@@ -18,7 +18,6 @@ test('should works properly when invoked', function () {
 	expect($result->getStatusCode())->toBe(303);
 });
 
-
 test('should throw exception when pass less parameters than was needed', function () {
 	$controller = new FakeActionController($this->response, $this->stream, new FakeSessionManager());
 
@@ -29,4 +28,4 @@ test('should throw exception when pass route without params when it needed', fun
 	$controller = new FakeActionController($this->response, $this->stream, new FakeSessionManager());
 
 	$controller->testCreateRedirectResponse(new FakeRoute());
-})->throws(RuntimeException::class, 'Try render route before define params with $this->withParams(...$params) method');
+})->throws(RuntimeException::class, 'Try render route with format "/fake/%s/opa/%s" before define params with $this->withParams(...$params) method');

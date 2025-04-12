@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace RoneiKunkel\Webstract\Request;
 
-enum RequestMethod implements \Stringable
+enum RequestMethod
 {
 	case GET;
 	case POST;
@@ -27,8 +27,8 @@ enum RequestMethod implements \Stringable
 	// 	return null;
 	// }
 
-	public function __toString(): string
-	{
-		return $this->name;
-	}
+	// public function __toString(): string
+	// {
+	// 	return $this->name;
+	// }
 }
