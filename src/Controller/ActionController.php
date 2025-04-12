@@ -6,8 +6,9 @@ namespace RoneiKunkel\Webstract\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use RoneiKunkel\Webstract\Common\Controller\DownloadableResponse;
-use RoneiKunkel\Webstract\Session\SessionInterface;
+use RoneiKunkel\Webstract\Controller\DownloadableResponse;
+use RoneiKunkel\Webstract\Route\RoutePathTemplate;
+use RoneiKunkel\Webstract\Session\SessionHandlerInterface;
 
 abstract class ActionController extends Controller
 {
@@ -16,13 +17,13 @@ abstract class ActionController extends Controller
 	public function __construct(
 		ResponseInterface $responseInterface,
 		StreamInterface $streamInterface,
-		protected readonly SessionInterface $sessionInterface,
+		protected readonly SessionHandlerInterface $sessionHandlerInterface,
 	) {
 		parent::__construct($responseInterface, $streamInterface);
 	}
 
-	protected function createRedirectResponse(string $route): ResponseInterface
+	protected function createRedirectResponse(RoutePathTemplate $route): ResponseInterface
 	{
-		return $this->responseInterface->withHeader('location', $route)->withStatus(303);
+		return $this->responseInterface->withHeader('location', $route->renderPath())->withStatus(303);
 	}
 }

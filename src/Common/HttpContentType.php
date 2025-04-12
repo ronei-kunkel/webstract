@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace RoneiKunkel\Webstract\Common\Controller;
+namespace RoneiKunkel\Webstract\Common;
 
-enum ContentType: string
+enum HttpContentType: string
 {
 	case TXT = 'text/plain';
 	case HTML = 'text/html';

@@ -31,12 +31,6 @@ pest()
             $this->psr17Factory,
             $this->psr17Factory,
         ))->fromGlobals();
-        $this->session = new FakeSessionManager();
-        $this->session->create();
-    });
-pest()
-    ->afterEach(function () {
-        $this->session->destroy();
     });
 
 /*

@@ -1,6 +1,7 @@
 {
     "name": "ronei-kunkel/webstract",
     "description": "The web abstraction package",
+    "version": "1.0.0-dev",
     "type": "library",
     "require-dev": {
         "pestphp/pest": "^3.8",
@@ -28,7 +29,9 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "psr/http-message": "^2.0"
+        "psr/http-message": "^2.0",
+        "psr/http-server-handler": "^1.0",
+        "psr/http-server-middleware": "^1.0"
     },
     "config": {
         "allow-plugins": {
@@ -36,6 +39,6 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/pest --test-directory test"
+        "test": "vendor/bin/pest --test-directory test --ci"
     }
 }
