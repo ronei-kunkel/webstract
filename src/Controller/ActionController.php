@@ -24,6 +24,6 @@ abstract class ActionController extends Controller
 
 	protected function createRedirectResponse(RoutePathTemplate $route): ResponseInterface
 	{
-		return $this->responseInterface->withHeader('location', $route->renderPath())->withStatus(303);
+		return $this->responseInterface->withHeader('Location', $route->renderPath())->withStatus(303);
 	}
 }

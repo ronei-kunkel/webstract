@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 use RoneiKunkel\Webstract\Common\HttpContentType;
 
+it('have header name', function () {
+	expect(HttpContentType::getHeaderName())->toBe('Content-Type');
+});
+
 it('returns the correct ContentType for valid extensions', function (string $fileName, HttpContentType $expectedContentType) {
 	$result = HttpContentType::fromFilename($fileName);
 	expect($result)->toBe($expectedContentType);

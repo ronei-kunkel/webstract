@@ -8,7 +8,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 
-// @todo controller should have to register middlewares instead routes
+// @todo controller should have to register middlewares instead registered into routes
+// @todo controller should have to register the expected input
 abstract class Controller
 {
 	public function __construct(

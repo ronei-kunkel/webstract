@@ -20,7 +20,7 @@ use Test\Support\RoneiKunkel\Webstract\Session\FakeSessionManager;
 */
 
 pest()
-    // ->extend(TestCase::class)
+    ->extend(TestCase::class)
     ->beforeEach(function () {
         $this->psr17Factory = new Psr17Factory();
         $this->response = $this->psr17Factory->createResponse();

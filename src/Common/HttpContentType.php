@@ -105,4 +105,9 @@ enum HttpContentType: string
 			default => null,
 		};
 	}
+
+	public static function getHeaderName(): string
+	{
+		return 'Content-Type';
+	}
 }

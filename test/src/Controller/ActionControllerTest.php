@@ -14,7 +14,7 @@ test('should works properly when invoked', function () {
 
 	expect($result)->toBeInstanceOf(ResponseInterface::class);
 	expect((string) $result->getBody())->toBe('');
-	expect($result->getHeaders())->toBe(['location' => ['/fake/1234/opa/1234567']]);
+	expect($result->getHeaders())->toBe(['Location' => ['/fake/1234/opa/1234567']]);
 	expect($result->getStatusCode())->toBe(303);
 });
 

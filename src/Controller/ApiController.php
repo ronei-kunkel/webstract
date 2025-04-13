@@ -6,6 +6,7 @@ namespace RoneiKunkel\Webstract\Controller;
 
 use JsonSerializable;
 use Psr\Http\Message\ResponseInterface;
+use RoneiKunkel\Webstract\Common\HttpContentType;
 use RoneiKunkel\Webstract\Controller\DownloadableResponse;
 
 abstract class ApiController extends Controller
@@ -21,7 +22,7 @@ abstract class ApiController extends Controller
 
 		return $this->responseInterface
 			->withBody($this->streamInterface)
-			->withHeader('content-type', 'application/json')
+			->withHeader(HttpContentType::getHeaderName(), HttpContentType::JSON->value)
 			->withStatus(200);
 	}
 }
