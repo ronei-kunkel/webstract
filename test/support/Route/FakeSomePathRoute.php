@@ -7,29 +7,29 @@ namespace Test\Support\RoneiKunkel\Webstract\Route;
 use RoneiKunkel\Webstract\Request\RequestMethod;
 use RoneiKunkel\Webstract\Route\RouteDefinition;
 use RoneiKunkel\Webstract\Route\RoutePathTemplate;
-use Test\Support\RoneiKunkel\Webstract\Controller\FakeApiController;
+use Test\Support\RoneiKunkel\Webstract\Controller\FakeActionController;
 
-final class FakeRoute extends RoutePathTemplate implements RouteDefinition
+final class FakeSomePathRoute extends RoutePathTemplate implements RouteDefinition
 {
 	public function getMethod(): RequestMethod
 	{
-		return RequestMethod::GET;
+		return RequestMethod::POST;
 	}
 
 	public function getPattern(): string
 	{
 		// @todo can be used when we implemented controller input
-		// return '@^/fake/(?<fake>\d+)/opa/(?<opa>\d+)/?$@';
-		return '@^/fake/\d+/opa/\d+/?$@';
+		// return '@^/some/(?<some>\d+)/path/?$@';
+		return '@^/some/\d+/path/?$@';
 	}
 
 	public function getPathFormat(): string
 	{
-		return '/fake/%s/opa/%s';
+		return '/some/%s/path';
 	}
 
 	public function getController(): string
 	{
-		return FakeApiController::class;
+		return FakeActionController::class;
 	}
 }

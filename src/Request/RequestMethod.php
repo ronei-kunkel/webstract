@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace RoneiKunkel\Webstract\Request;
 
-enum RequestMethod implements \Stringable
+enum RequestMethod: string
 {
-	case GET;
-	case POST;
-	case PUT;
-	case DELETE;
-	case PATCH;
-	case HEAD;
-	case OPTIONS;
-	case CONNECT;
-	case TRACE;
+	case GET = 'GET';
+	case POST = 'POST';
+	case PUT = 'PUT';
+	case DELETE = 'DELETE';
+	case PATCH = 'PATCH';
+	case HEAD = 'HEAD';
+	case OPTIONS = 'OPTIONS';
+	case CONNECT = 'CONNECT';
+	case TRACE = 'TRACE';
 
 	// public static function tryResolve(string $method): ?self
 	// {
@@ -26,9 +26,4 @@ enum RequestMethod implements \Stringable
 
 	// 	return null;
 	// }
-
-	public function __toString(): string
-	{
-		return $this->name;
-	}
 }
