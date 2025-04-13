@@ -27,11 +27,11 @@ trait DownloadableResponse
 		fclose($stream);
 
 		return $this->responseInterface
-			->withHeader('Content-Type', $contentType->value)
+			->withHeader($contentType::getHeaderName(), $contentType->value)
 			->withHeader('Content-Disposition', sprintf('attachment; filename="%s"', $filename))
 			->withHeader('Content-Length', (string) filesize($filePath))
 			->withHeader('X-Content-Type-Options', 'nosniff')
-			->withStatus(200)
-			->withBody($this->streamInterface);
+			->withBody($this->streamInterface)
+			->withStatus(200);
 	}
 }

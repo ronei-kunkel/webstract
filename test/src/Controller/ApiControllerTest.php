@@ -13,7 +13,7 @@ test('should works properly when invoked', function () {
 
 	expect($result)->toBeInstanceOf(ResponseInterface::class);
 	expect((string) $result->getBody())->toBe('{"message":"Hello, World!"}');
-	expect($result->getHeaders())->toBe(['content-type' => ['application/json']]);
+	expect($result->getHeaders())->toBe(['Content-Type' => ['application/json']]);
 	expect($result->getStatusCode())->toBe(200);
 });
 
@@ -24,7 +24,7 @@ test('createJsonResponse handles expected entries gracefully', function (mixed $
 
 	expect($result)->toBeInstanceOf(ResponseInterface::class);
 	expect((string) $result->getBody())->toBe($expectedBodyResult);
-	expect($result->getHeaders())->toBe(['content-type' => ['application/json']]);
+	expect($result->getHeaders())->toBe(['Content-Type' => ['application/json']]);
 	expect($result->getStatusCode())->toBe(200);
 })->with([
 	[null, ''],
