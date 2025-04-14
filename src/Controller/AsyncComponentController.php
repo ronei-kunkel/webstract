@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use RoneiKunkel\Webstract\Common\HttpContentType;
 use RoneiKunkel\Webstract\Route\RoutePathTemplate;
-use RoneiKunkel\Webstract\Session\SessionHandlerInterface;
+use RoneiKunkel\Webstract\Session\SessionHandler;
 use RoneiKunkel\Webstract\TemplateEngine\TemplateEngineRenderer;
 use RoneiKunkel\Webstract\Web\AsyncComponent;
 
@@ -17,7 +17,7 @@ abstract class AsyncComponentController extends Controller
 	public function __construct(
 		protected readonly ResponseInterface $responseInterface,
 		protected readonly StreamInterface $streamInterface,
-		protected readonly SessionHandlerInterface $sessionService,
+		protected readonly SessionHandler $sessionService,
 		private readonly TemplateEngineRenderer $templateEngineRenderer,
 	) {}
 

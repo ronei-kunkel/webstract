@@ -2,11 +2,7 @@
 
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
-use RoneiKunkel\Webstract\Controller\ApiController;
 use Test\RoneiKunkel\Webstract\TestCase;
-use Test\Support\RoneiKunkel\Webstract\Session\FakeSessionManager;
 
 /*
 |--------------------------------------------------------------------------

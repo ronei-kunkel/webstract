@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace RoneiKunkel\Webstract\Route;
 
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 final class RouteResolver
 {
 	public function __construct(private readonly RouteProvider $routeProvider) {}
 
-	public function resolve(RequestInterface $request): RouteDefinition
+	public function resolve(ServerRequestInterface $serverRequest): RouteDefinition
 	{
-		$method = $request->getMethod();
-		$path = $request->getUri()->getPath();
+		$method = $serverRequest->getMethod();
+		$path = $serverRequest->getUri()->getPath();
 
 		foreach ($this->routeProvider->routes() as $route) {
 			if ($route->getMethod()->name !== $method) {

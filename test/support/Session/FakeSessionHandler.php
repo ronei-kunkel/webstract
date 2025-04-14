@@ -6,11 +6,10 @@ namespace Test\Support\RoneiKunkel\Webstract\Session;
 
 use RoneiKunkel\Webstract\Session\Exception\SessionProviderUnreachableException;
 use RoneiKunkel\Webstract\Session\Exception\SessionValueNotFoundException;
-use RoneiKunkel\Webstract\Session\SessionHandlerInterface;
-use RoneiKunkel\Webstract\Session\SessionInterface;
+use RoneiKunkel\Webstract\Session\SessionHandler;
 use RoneiKunkel\Webstract\Session\SessionKeyInterface;
 
-final class FakeSessionManager implements SessionInterface, SessionHandlerInterface
+final class FakeSessionHandler implements SessionHandler
 {
 	private static ?array $session = null;
 

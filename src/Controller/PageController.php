@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use RoneiKunkel\Webstract\Common\HttpContentType;
 use RoneiKunkel\Webstract\Web\Page;
-use RoneiKunkel\Webstract\Session\SessionHandlerInterface;
+use RoneiKunkel\Webstract\Session\SessionHandler;
 use RoneiKunkel\Webstract\TemplateEngine\TemplateEngineRenderer;
 
 abstract class PageController extends ActionController
@@ -16,7 +16,7 @@ abstract class PageController extends ActionController
 	public function __construct(
 		ResponseInterface $responseInterface,
 		StreamInterface $streamInterface,
-		SessionHandlerInterface $sessionHandlerInterface,
+		SessionHandler $sessionHandlerInterface,
 		private readonly TemplateEngineRenderer $templateEngineRenderer,
 	) {
 		parent::__construct($responseInterface, $streamInterface, $sessionHandlerInterface);

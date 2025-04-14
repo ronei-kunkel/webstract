@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Nyholm\Psr7\Request;
+use Nyholm\Psr7\ServerRequest;
 use RoneiKunkel\Webstract\Request\RequestMethod;
 use RoneiKunkel\Webstract\Route\RouteDefinition;
 use RoneiKunkel\Webstract\Route\RouteProvider;
@@ -31,10 +31,10 @@ test('should resolve properly', function () {
 			return new FakeFallbackRoute();
 		}
 	};
-	$request = new Request('POST', 'http://localhost/some/11/path');
+	$serverRequest = new ServerRequest('POST', 'http://localhost/some/11/path');
 	$routeResolver = new RouteResolver($routeProvider);
 
-	$routeDefinition = $routeResolver->resolve($request);
+	$routeDefinition = $routeResolver->resolve($serverRequest);
 
 	expect($routeDefinition)->toBeInstanceOf(FakeSomePathRoute::class);
 	expect($routeDefinition->getMethod())->toEqual(RequestMethod::POST);
@@ -60,10 +60,10 @@ test('should return fallback route when not match request', function () {
 			return new FakeFallbackRoute();
 		}
 	};
-	$request = new Request('POST', 'http://localhost/some/11/path/11');
+	$serverRequest = new ServerRequest('POST', 'http://localhost/some/11/path/11');
 	$routeResolver = new RouteResolver($routeProvider);
 
-	$routeDefinition = $routeResolver->resolve($request);
+	$routeDefinition = $routeResolver->resolve($serverRequest);
 
 	expect($routeDefinition)->toBeInstanceOf(FakeFallbackRoute::class);
 	expect($routeDefinition->getMethod())->toEqual(RequestMethod::GET);
