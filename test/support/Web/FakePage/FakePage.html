@@ -5,9 +5,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{{ template.tabTitle() }}</title>
 	<style>{{ source(template.cssPath()) }}</style>
+	{% if template.content.cssPath() %}
+	<style>{{ source(template.content.cssPath()) }}</style>
+	{% endif %}
 </head>
 <body>
-	<h1>{{template.test}}</h1>
+	{% include template.content.htmlPath() %}
 	<script>{{ source(template.jsPath()) }}</script>
+	{% if template.content.jsPath() %}
+	<script>{{ source(template.content.jsPath()) }}</script>
+	{% endif %}
 </body>
 </html>

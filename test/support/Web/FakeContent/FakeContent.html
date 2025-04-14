@@ -1,0 +1,7 @@
+<h1>{{ content.contentTitle() }}</h1>
+<p>{{ content.paragraph }}</p>
+<ul>
+	{% for listItem in content.list %}
+	<li>{{ listItem }}</li>
+	{% endfor %}
+</ul>
