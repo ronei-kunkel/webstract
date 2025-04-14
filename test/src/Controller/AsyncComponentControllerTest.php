@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Test\Support\RoneiKunkel\Webstract\Controller\FakeAsyncComponentController;
-use Test\Support\RoneiKunkel\Webstract\Session\FakeSessionManager;
+use Test\Support\RoneiKunkel\Webstract\Session\FakeSessionHandler;
 use Test\Support\RoneiKunkel\Webstract\TemplateEngine\TwigTemplateEngineRenderer;
 use Test\Support\RoneiKunkel\Webstract\Web\FakeAsyncComponent\FakeNonRenderableAsyncComponent;
 
@@ -11,7 +11,7 @@ test('should works properly with renderable component', function () {
 	$controller = new FakeAsyncComponentController(
 		$this->response,
 		$this->stream,
-		new FakeSessionManager(),
+		new FakeSessionHandler(),
 		new TwigTemplateEngineRenderer()
 	);
 
@@ -30,7 +30,7 @@ test('should works properly with non renderable component', function () {
 	$controller = new FakeAsyncComponentController(
 		$this->response,
 		$this->stream,
-		new FakeSessionManager(),
+		new FakeSessionHandler(),
 		new TwigTemplateEngineRenderer()
 	);
 
@@ -51,7 +51,7 @@ test('should return empty response', function () {
 	$controller = new FakeAsyncComponentController(
 		$this->response,
 		$this->stream,
-		new FakeSessionManager(),
+		new FakeSessionHandler(),
 		new TwigTemplateEngineRenderer()
 	);
 
@@ -66,7 +66,7 @@ test('should return redirect response', function () {
 	$controller = new FakeAsyncComponentController(
 		$this->response,
 		$this->stream,
-		new FakeSessionManager(),
+		new FakeSessionHandler(),
 		new TwigTemplateEngineRenderer()
 	);
 

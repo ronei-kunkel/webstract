@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use RoneiKunkel\Webstract\Controller\DownloadableResponse;
 use RoneiKunkel\Webstract\Route\RoutePathTemplate;
-use RoneiKunkel\Webstract\Session\SessionHandlerInterface;
+use RoneiKunkel\Webstract\Session\SessionHandler;
 
 abstract class ActionController extends Controller
 {
@@ -17,7 +17,7 @@ abstract class ActionController extends Controller
 	public function __construct(
 		ResponseInterface $responseInterface,
 		StreamInterface $streamInterface,
-		protected readonly SessionHandlerInterface $sessionHandlerInterface,
+		protected readonly SessionHandler $sessionHandlerInterface,
 	) {
 		parent::__construct($responseInterface, $streamInterface);
 	}

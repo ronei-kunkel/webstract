@@ -7,8 +7,19 @@ namespace RoneiKunkel\Webstract\Session;
 use RoneiKunkel\Webstract\Session\Exception\SessionProviderUnreachableException;
 use RoneiKunkel\Webstract\Session\Exception\SessionValueNotFoundException;
 
-interface SessionHandlerInterface
+interface SessionHandler
 {
+	/**
+	 * @throws SessionProviderUnreachableException
+	 * @return void
+	 */
+	public function create(): void;
+
+	/**
+	 * @return void
+	 */
+	public function destroy(): void;
+
 	/**
 	 * @param SessionKeyInterface $key
 	 * @throws SessionProviderUnreachableException
