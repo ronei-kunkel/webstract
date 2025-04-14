@@ -1,0 +1,1 @@
+var fakeContentDate = new Date();

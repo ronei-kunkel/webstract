@@ -7,7 +7,7 @@ namespace RoneiKunkel\Webstract\Controller;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use RoneiKunkel\Webstract\Common\HttpContentType;
-use RoneiKunkel\Webstract\Page\PageTemplate;
+use RoneiKunkel\Webstract\Web\Page;
 use RoneiKunkel\Webstract\Session\SessionHandlerInterface;
 use RoneiKunkel\Webstract\TemplateEngine\TemplateEngineRenderer;
 
@@ -22,10 +22,10 @@ abstract class PageController extends ActionController
 		parent::__construct($responseInterface, $streamInterface, $sessionHandlerInterface);
 	}
 
-	protected function createHtmlResponse(PageTemplate $template): ResponseInterface
+	protected function createHtmlResponse(Page $page): ResponseInterface
 	{
 		$this->streamInterface->write(
-			$this->templateEngineRenderer->render($template->htmlPath(), $template->getContext())
+			$this->templateEngineRenderer->render($page->htmlPath(), $page->getContext())
 		);
 
 		return $this->responseInterface

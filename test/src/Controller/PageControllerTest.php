@@ -5,16 +5,21 @@ declare(strict_types=1);
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RoneiKunkel\Webstract\Controller\PageController;
-use Test\Support\RoneiKunkel\Webstract\Page\FakePageTemplate;
 use Test\Support\RoneiKunkel\Webstract\Session\FakeSessionManager;
 use Test\Support\RoneiKunkel\Webstract\TemplateEngine\TwigTemplateEngineRenderer;
+use Test\Support\RoneiKunkel\Webstract\Web\FakeContent\FakeContent;
+use Test\Support\RoneiKunkel\Webstract\Web\FakePage\FakePage;
 
 test('Page controller should works properly', function () {
 	$pageController = new class($this->response, $this->stream, new FakeSessionManager(), new TwigTemplateEngineRenderer()) extends PageController {
 		public function __invoke(ServerRequestInterface $serverRequest): ResponseInterface
 		{
-			$template = new FakePageTemplate('the variable template.test should placed here');
-			return $this->createHtmlResponse($template);
+			$content = new FakeContent(
+				['test1', 'test2'],
+				'paragraph',
+			);
+			$page = new FakePage($content);
+			return $this->createHtmlResponse($page);
 		}
 	};
 
@@ -32,16 +37,25 @@ test('Page controller should works properly', function () {
 			background-color: red;
 		}
 		</style>
-		</head>
+				<style>* {
+			background-color: blue;
+		}
+		</style>
+			</head>
 		<body>
-			<h1>the variable template.test should placed here</h1>
-			<script>var fakeDate = new Date();
+			<h1>Content Title</h1>
+		<p>paragraph</p>
+		<ul>
+				<li>test1</li>
+				<li>test2</li>
+			</ul>	<script>var fakeDate = new Date();
 		</script>
-		</body>
+				<script>var fakeContentDate = new Date();
+		</script>
+			</body>
 		</html>
-
 		HTML
 	);
 	expect($response->getHeaders())->toBe(['Content-Type' => ['text/html']]);
 	expect($response->getStatusCode())->toBe(200);
-});
+})->only();
