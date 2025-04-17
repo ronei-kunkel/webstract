@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Test\Support\RoneiKunkel\Webstract\Controller\FakeAsyncComponentController;
-use Test\Support\RoneiKunkel\Webstract\Session\FakeSessionHandler;
-use Test\Support\RoneiKunkel\Webstract\TemplateEngine\TwigTemplateEngineRenderer;
-use Test\Support\RoneiKunkel\Webstract\Web\FakeAsyncComponent\FakeNonRenderableAsyncComponent;
+use Test\Support\Controller\FakeAsyncComponentController;
+use Test\Support\Session\FakeSessionHandler;
+use Test\Support\TemplateEngine\TwigTemplateEngineRenderer;
+use Test\Support\Web\FakeAsyncComponent\FakeNonRenderableAsyncComponent;
 
 test('should works properly with renderable component', function () {
 	$controller = new FakeAsyncComponentController(

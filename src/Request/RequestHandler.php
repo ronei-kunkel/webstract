@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace RoneiKunkel\Webstract\Request;
+namespace Webstract\Request;
 
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -11,14 +11,14 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use ReflectionClass;
-use RoneiKunkel\Webstract\Controller\ActionController;
-use RoneiKunkel\Webstract\Controller\ApiController;
-use RoneiKunkel\Webstract\Controller\AsyncComponentController;
-use RoneiKunkel\Webstract\Controller\PageController;
-use RoneiKunkel\Webstract\Route\RouteProvider;
-use RoneiKunkel\Webstract\Route\RouteResolver;
-use RoneiKunkel\Webstract\Session\SessionHandler;
-use RoneiKunkel\Webstract\TemplateEngine\TemplateEngineRenderer;
+use Webstract\Controller\ActionController;
+use Webstract\Controller\ApiController;
+use Webstract\Controller\AsyncComponentController;
+use Webstract\Controller\PageController;
+use Webstract\Route\RouteProvider;
+use Webstract\Route\RouteResolver;
+use Webstract\Session\SessionHandler;
+use Webstract\TemplateEngine\TemplateEngineRenderer;
 
 final class RequestHandler implements RequestHandlerInterface
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Test\Support\RoneiKunkel\Webstract\Controller;
+namespace Test\Support\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use RoneiKunkel\Webstract\Controller\ApiController;
+use Webstract\Controller\ApiController;
 
 class FakeApiController extends ApiController
 {

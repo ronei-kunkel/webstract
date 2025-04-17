@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Psr\Http\Message\ResponseInterface;
-use Test\Support\RoneiKunkel\Webstract\Controller\FakeActionController;
-use Test\Support\RoneiKunkel\Webstract\Route\FakeRoute;
-use Test\Support\RoneiKunkel\Webstract\Session\FakeSessionHandler;
+use Test\Support\Controller\FakeActionController;
+use Test\Support\Route\FakeRoute;
+use Test\Support\Session\FakeSessionHandler;
 
 test('should works properly when invoked', function () {
 	$controller = new FakeActionController($this->response, $this->stream, new FakeSessionHandler());

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace RoneiKunkel\Webstract\TemplateEngine;
+namespace Webstract\TemplateEngine;
 
 interface TemplateEngineRenderer
 {

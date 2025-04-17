@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use RoneiKunkel\Webstract\Request\RequestMethod;
-use RoneiKunkel\Webstract\Route\RouteDefinition;
-use Test\Support\RoneiKunkel\Webstract\Controller\FakeController;
+use Webstract\Request\RequestMethod;
+use Webstract\Route\RouteDefinition;
+use Test\Support\Controller\FakeController;
 
 test('Should works properly', function () {
 	$definitions = new class implements RouteDefinition {

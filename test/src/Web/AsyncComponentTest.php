@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Test\Support\RoneiKunkel\Webstract\Web\FakeAsyncComponent\FakeNonRenderableAsyncComponent;
-use Test\Support\RoneiKunkel\Webstract\Web\FakeAsyncComponent\FakeRenderableAsyncComponent;
+use Test\Support\Web\FakeAsyncComponent\FakeNonRenderableAsyncComponent;
+use Test\Support\Web\FakeAsyncComponent\FakeRenderableAsyncComponent;
 
 test('should work properly when renderable', function () {
 	$component = new FakeRenderableAsyncComponent('title');

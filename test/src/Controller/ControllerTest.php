@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Psr\Http\Message\ResponseInterface;
-use Test\Support\RoneiKunkel\Webstract\Controller\FakeController;
+use Test\Support\Controller\FakeController;
 
 test('Controller::__invoke writes to stream and returns the modified response', function () {
 	$controller = new FakeController($this->response, $this->stream);

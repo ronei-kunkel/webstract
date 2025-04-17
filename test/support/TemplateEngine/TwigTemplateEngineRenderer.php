@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Test\Support\RoneiKunkel\Webstract\TemplateEngine;
+namespace Test\Support\TemplateEngine;
 
-use RoneiKunkel\Webstract\TemplateEngine\TemplateEngineRenderer;
+use Webstract\TemplateEngine\TemplateEngineRenderer;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 

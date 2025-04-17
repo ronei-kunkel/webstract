@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Test\Support\RoneiKunkel\Webstract\Web\FakePage;
+namespace Test\Support\Web\FakePage;
 
-use RoneiKunkel\Webstract\Web\Page;
+use Webstract\Web\Page;
 
 final class FakePage extends Page
 {

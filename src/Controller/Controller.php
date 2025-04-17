@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace RoneiKunkel\Webstract\Controller;
+namespace Webstract\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

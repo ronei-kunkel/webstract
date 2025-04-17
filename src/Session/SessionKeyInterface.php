@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace RoneiKunkel\Webstract\Session;
+namespace Webstract\Session;
 
 interface SessionKeyInterface
 {

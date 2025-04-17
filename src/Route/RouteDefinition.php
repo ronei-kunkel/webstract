@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace RoneiKunkel\Webstract\Route;
+namespace Webstract\Route;
 
-use RoneiKunkel\Webstract\Request\RequestMethod;
+use Webstract\Request\RequestMethod;
 
 interface RouteDefinition
 {

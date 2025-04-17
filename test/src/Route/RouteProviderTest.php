@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use RoneiKunkel\Webstract\Route\RouteDefinition;
-use RoneiKunkel\Webstract\Route\RouteProvider;
-use Test\Support\RoneiKunkel\Webstract\Route\FakeFallbackRoute;
-use Test\Support\RoneiKunkel\Webstract\Route\FakeRoute;
-use Test\Support\RoneiKunkel\Webstract\Route\FakeSomePathRoute;
+use Webstract\Route\RouteDefinition;
+use Webstract\Route\RouteProvider;
+use Test\Support\Route\FakeFallbackRoute;
+use Test\Support\Route\FakeRoute;
+use Test\Support\Route\FakeSomePathRoute;
 
 test('should return registered routes', function () {
 	$routeProvider = new class implements RouteProvider {

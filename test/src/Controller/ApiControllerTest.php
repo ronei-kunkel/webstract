@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Psr\Http\Message\ResponseInterface;
-use Test\Support\RoneiKunkel\Webstract\Controller\FakeApiController;
-use Test\Support\RoneiKunkel\Webstract\JsonSerializableClass;
+use Test\Support\Controller\FakeApiController;
+use Test\Support\JsonSerializableClass;
 
 test('should works properly when invoked', function () {
 	$controller = new FakeApiController($this->response, $this->stream);

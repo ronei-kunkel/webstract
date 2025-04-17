@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace RoneiKunkel\Webstract\Controller;
+namespace Webstract\Controller;
 
 use Psr\Http\Message\ResponseInterface;
-use RoneiKunkel\Webstract\Common\HttpContentType;
+use Webstract\Common\HttpContentType;
 
 trait DownloadableResponse
 {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace RoneiKunkel\Webstract\Session;
+namespace Webstract\Session;
 
-use RoneiKunkel\Webstract\Session\Exception\SessionProviderUnreachableException;
-use RoneiKunkel\Webstract\Session\Exception\SessionValueNotFoundException;
+use Webstract\Session\Exception\SessionProviderUnreachableException;
+use Webstract\Session\Exception\SessionValueNotFoundException;
 
 interface SessionHandler
 {

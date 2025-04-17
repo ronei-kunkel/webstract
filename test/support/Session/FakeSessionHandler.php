@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Test\Support\RoneiKunkel\Webstract\Session;
+namespace Test\Support\Session;
 
-use RoneiKunkel\Webstract\Session\Exception\SessionProviderUnreachableException;
-use RoneiKunkel\Webstract\Session\Exception\SessionValueNotFoundException;
-use RoneiKunkel\Webstract\Session\SessionHandler;
-use RoneiKunkel\Webstract\Session\SessionKeyInterface;
+use Webstract\Session\Exception\SessionProviderUnreachableException;
+use Webstract\Session\Exception\SessionValueNotFoundException;
+use Webstract\Session\SessionHandler;
+use Webstract\Session\SessionKeyInterface;
 
 final class FakeSessionHandler implements SessionHandler
 {

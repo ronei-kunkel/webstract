@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace RoneiKunkel\Webstract\Common;
+namespace Webstract\Common;
 
 enum HttpContentType: string
 {

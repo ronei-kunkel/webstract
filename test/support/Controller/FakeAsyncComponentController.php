@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Test\Support\RoneiKunkel\Webstract\Controller;
+namespace Test\Support\Controller;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use RoneiKunkel\Webstract\Controller\AsyncComponentController;
-use RoneiKunkel\Webstract\Web\AsyncComponent;
-use Test\Support\RoneiKunkel\Webstract\Route\FakeRoute;
-use Test\Support\RoneiKunkel\Webstract\Web\FakeAsyncComponent\FakeRenderableAsyncComponent;
+use Webstract\Controller\AsyncComponentController;
+use Webstract\Web\AsyncComponent;
+use Test\Support\Route\FakeRoute;
+use Test\Support\Web\FakeAsyncComponent\FakeRenderableAsyncComponent;
 
 final class FakeAsyncComponentController extends AsyncComponentController
 {

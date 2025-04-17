@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace RoneiKunkel\Webstract\Response;
+namespace Webstract\Response;
 
 use Psr\Http\Message\ResponseInterface;
 

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use RoneiKunkel\Webstract\Controller\PageController;
-use Test\Support\RoneiKunkel\Webstract\Session\FakeSessionHandler;
-use Test\Support\RoneiKunkel\Webstract\TemplateEngine\TwigTemplateEngineRenderer;
-use Test\Support\RoneiKunkel\Webstract\Web\FakeContent\FakeContent;
-use Test\Support\RoneiKunkel\Webstract\Web\FakePage\FakePage;
+use Webstract\Controller\PageController;
+use Test\Support\Session\FakeSessionHandler;
+use Test\Support\TemplateEngine\TwigTemplateEngineRenderer;
+use Test\Support\Web\FakeContent\FakeContent;
+use Test\Support\Web\FakePage\FakePage;
 
 test('Page controller should works properly', function () {
 	$pageController = new class($this->response, $this->stream, new FakeSessionHandler(), new TwigTemplateEngineRenderer()) extends PageController {

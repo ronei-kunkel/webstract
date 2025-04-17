@@ -13,13 +13,14 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "RoneiKunkel\\Webstract\\": "src/"
+            "Webstract\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Test\\RoneiKunkel\\Webstract\\": "test/",
-            "Test\\Support\\RoneiKunkel\\Webstract\\": "test/support/"
+            "Test\\": "test/",
+            "Test\\Webstract\\": "test/src/",
+            "Test\\Support\\": "test/support/"
         }
     },
     "authors": [

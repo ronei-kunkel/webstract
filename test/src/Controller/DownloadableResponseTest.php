@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Psr\Http\Message\ResponseInterface;
-use Test\Support\RoneiKunkel\Webstract\Controller\FakeApiController;
+use Test\Support\Controller\FakeApiController;
 
 test('createDownloadResponse works properly', function (string $expectedFilepath, string $expectedContentType, string $expectedBody) {
 	$class = new FakeApiController($this->response, $this->stream);

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace RoneiKunkel\Webstract\Controller;
+namespace Webstract\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use RoneiKunkel\Webstract\Common\HttpContentType;
-use RoneiKunkel\Webstract\Web\Page;
-use RoneiKunkel\Webstract\Session\SessionHandler;
-use RoneiKunkel\Webstract\TemplateEngine\TemplateEngineRenderer;
+use Webstract\Common\HttpContentType;
+use Webstract\Web\Page;
+use Webstract\Session\SessionHandler;
+use Webstract\TemplateEngine\TemplateEngineRenderer;
 
 abstract class PageController extends ActionController
 {

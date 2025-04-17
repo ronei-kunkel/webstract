@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace RoneiKunkel\Webstract\Controller;
+namespace Webstract\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use RoneiKunkel\Webstract\Common\HttpContentType;
-use RoneiKunkel\Webstract\Route\RoutePathTemplate;
-use RoneiKunkel\Webstract\Session\SessionHandler;
-use RoneiKunkel\Webstract\TemplateEngine\TemplateEngineRenderer;
-use RoneiKunkel\Webstract\Web\AsyncComponent;
+use Webstract\Common\HttpContentType;
+use Webstract\Route\RoutePathTemplate;
+use Webstract\Session\SessionHandler;
+use Webstract\TemplateEngine\TemplateEngineRenderer;
+use Webstract\Web\AsyncComponent;
 
 abstract class AsyncComponentController extends Controller
 {

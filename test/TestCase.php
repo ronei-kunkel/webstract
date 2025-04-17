@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\RoneiKunkel\Webstract;
+namespace Test;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
