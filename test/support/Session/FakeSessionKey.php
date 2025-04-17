@@ -1,8 +1,8 @@
 <?php
 
-namespace Test\Support\RoneiKunkel\Webstract\Session;
+namespace Test\Support\Session;
 
-use RoneiKunkel\Webstract\Session\SessionKeyInterface;
+use Webstract\Session\SessionKeyInterface;
 
 enum FakeSessionKey: string implements SessionKeyInterface
 {

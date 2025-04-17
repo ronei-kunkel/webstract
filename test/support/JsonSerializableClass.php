@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Support\RoneiKunkel\Webstract;
+namespace Test\Support;
 
 use JsonSerializable;
 

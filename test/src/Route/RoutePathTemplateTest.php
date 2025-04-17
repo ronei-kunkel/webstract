@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use RoneiKunkel\Webstract\Route\RoutePathTemplate;
+use Webstract\Route\RoutePathTemplate;
 
 test('should works properly', function () {
 	$routePathTempalte = new class extends RoutePathTemplate {

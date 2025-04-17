@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use RoneiKunkel\Webstract\Common\HttpContentType;
+use Webstract\Common\HttpContentType;
 
 it('have header name', function () {
 	expect(HttpContentType::getHeaderName())->toBe('Content-Type');

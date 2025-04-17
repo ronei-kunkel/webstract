@@ -1,12 +1,12 @@
 <?php
 
-namespace Test\Support\RoneiKunkel\Webstract\Controller;
+namespace Test\Support\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use RoneiKunkel\Webstract\Controller\ActionController;
-use RoneiKunkel\Webstract\Route\RoutePathTemplate;
-use Test\Support\RoneiKunkel\Webstract\Route\FakeRoute;
+use Webstract\Controller\ActionController;
+use Webstract\Route\RoutePathTemplate;
+use Test\Support\Route\FakeRoute;
 
 class FakeActionController extends ActionController
 {

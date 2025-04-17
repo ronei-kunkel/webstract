@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Test\Support\RoneiKunkel\Webstract\Web\FakeAsyncComponent;
+namespace Test\Support\Web\FakeAsyncComponent;
 
-use RoneiKunkel\Webstract\Web\AsyncComponent;
+use Webstract\Web\AsyncComponent;
 
 final class FakeNonRenderableAsyncComponent extends AsyncComponent
 {

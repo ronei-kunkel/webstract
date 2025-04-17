@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace RoneiKunkel\Webstract\Request;
+namespace Webstract\Request;
 
 use Psr\Http\Message\ServerRequestInterface;
 

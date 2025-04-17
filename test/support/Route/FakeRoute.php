@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Test\Support\RoneiKunkel\Webstract\Route;
+namespace Test\Support\Route;
 
-use RoneiKunkel\Webstract\Request\RequestMethod;
-use RoneiKunkel\Webstract\Route\RouteDefinition;
-use RoneiKunkel\Webstract\Route\RoutePathTemplate;
-use Test\Support\RoneiKunkel\Webstract\Controller\FakeApiController;
+use Webstract\Request\RequestMethod;
+use Webstract\Route\RouteDefinition;
+use Webstract\Route\RoutePathTemplate;
+use Test\Support\Controller\FakeApiController;
 
 final class FakeRoute extends RoutePathTemplate implements RouteDefinition
 {

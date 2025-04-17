@@ -2,7 +2,7 @@
 
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
-use Test\RoneiKunkel\Webstract\TestCase;
+use Test\TestCase;
 
 /*
 |--------------------------------------------------------------------------

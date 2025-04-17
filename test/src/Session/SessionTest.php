@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Test\Support\RoneiKunkel\Webstract\Session\FakeSessionKey;
-use RoneiKunkel\Webstract\Session\Exception\SessionProviderUnreachableException;
-use RoneiKunkel\Webstract\Session\Exception\SessionValueNotFoundException;
-use Test\Support\RoneiKunkel\Webstract\Session\FakeSessionHandler;
+use Test\Support\Session\FakeSessionKey;
+use Webstract\Session\Exception\SessionProviderUnreachableException;
+use Webstract\Session\Exception\SessionValueNotFoundException;
+use Test\Support\Session\FakeSessionHandler;
 
 beforeEach(function () {
 	$this->session = new FakeSessionHandler();

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace RoneiKunkel\Webstract\Controller;
+namespace Webstract\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use RoneiKunkel\Webstract\Controller\DownloadableResponse;
-use RoneiKunkel\Webstract\Route\RoutePathTemplate;
-use RoneiKunkel\Webstract\Session\SessionHandler;
+use Webstract\Controller\DownloadableResponse;
+use Webstract\Route\RoutePathTemplate;
+use Webstract\Session\SessionHandler;
 
 abstract class ActionController extends Controller
 {

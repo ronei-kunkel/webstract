@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Test\Support\RoneiKunkel\Webstract\Web\FakeContent;
+namespace Test\Support\Web\FakeContent;
 
-use RoneiKunkel\Webstract\Web\Content;
+use Webstract\Web\Content;
 
 final class FakeContent extends Content
 {

@@ -3,15 +3,15 @@
 declare(strict_types=1);
 
 use Nyholm\Psr7\ServerRequest;
-use RoneiKunkel\Webstract\Request\RequestMethod;
-use RoneiKunkel\Webstract\Route\RouteDefinition;
-use RoneiKunkel\Webstract\Route\RouteProvider;
-use RoneiKunkel\Webstract\Route\RouteResolver;
-use Test\Support\RoneiKunkel\Webstract\Controller\FakeActionController;
-use Test\Support\RoneiKunkel\Webstract\Controller\FakeController;
-use Test\Support\RoneiKunkel\Webstract\Route\FakeFallbackRoute;
-use Test\Support\RoneiKunkel\Webstract\Route\FakeRoute;
-use Test\Support\RoneiKunkel\Webstract\Route\FakeSomePathRoute;
+use Webstract\Request\RequestMethod;
+use Webstract\Route\RouteDefinition;
+use Webstract\Route\RouteProvider;
+use Webstract\Route\RouteResolver;
+use Test\Support\Controller\FakeActionController;
+use Test\Support\Controller\FakeController;
+use Test\Support\Route\FakeFallbackRoute;
+use Test\Support\Route\FakeRoute;
+use Test\Support\Route\FakeSomePathRoute;
 
 test('should resolve properly', function () {
 	$routeProvider = new class implements RouteProvider {

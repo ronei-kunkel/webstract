@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use RoneiKunkel\Webstract\Request\RequestMethod;
+use Webstract\Request\RequestMethod;
 
 test('should map all methods', function (array $expectedCases) {
 	expect(RequestMethod::cases())->toBe($expectedCases);

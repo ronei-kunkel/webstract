@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Test\Support\RoneiKunkel\Webstract\Web\FakeContent\FakeContent;
-use Test\Support\RoneiKunkel\Webstract\Web\FakePage\FakePage;
+use Test\Support\Web\FakeContent\FakeContent;
+use Test\Support\Web\FakePage\FakePage;
 
 test('should work properly', function () {
 	$content = new FakeContent(['test1', 'test2'], 'paragraph');
