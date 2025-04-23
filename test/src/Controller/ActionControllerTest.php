@@ -10,7 +10,7 @@ use Test\Support\Session\FakeSessionHandler;
 test('should works properly when invoked', function () {
 	$controller = new FakeActionController($this->response, $this->stream, new FakeSessionHandler());
 
-	$result = $controller($this->serverRequest);
+	$result = $controller->handle($this->serverRequest);
 
 	expect($result)->toBeInstanceOf(ResponseInterface::class);
 	expect((string) $result->getBody())->toBe('');

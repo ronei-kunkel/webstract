@@ -15,15 +15,4 @@ enum RequestMethod: string
 	case OPTIONS = 'OPTIONS';
 	case CONNECT = 'CONNECT';
 	case TRACE = 'TRACE';
-
-	// public static function tryResolve(string $method): ?self
-	// {
-	// 	foreach (self::cases() as $case) {
-	// 		if ($case->name === $method) {
-	// 			return $case;
-	// 		}
-	// 	}
-
-	// 	return null;
-	// }
 }

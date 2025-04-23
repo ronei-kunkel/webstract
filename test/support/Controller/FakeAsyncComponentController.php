@@ -13,7 +13,12 @@ use Test\Support\Web\FakeAsyncComponent\FakeRenderableAsyncComponent;
 
 final class FakeAsyncComponentController extends AsyncComponentController
 {
-	public function __invoke(ServerRequestInterface $serverRequest): ResponseInterface
+	public function middlewares(): array
+	{
+		return [];
+	}
+
+	public function handle(ServerRequestInterface $serverRequest): ResponseInterface
 	{
 		$component = new FakeRenderableAsyncComponent('FAKEE');
 		return $this->createHtmlResponse($component);

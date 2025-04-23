@@ -10,7 +10,12 @@ use Test\Support\Route\FakeApiControllerRoute;
 
 class FakeActionController extends ActionController
 {
-	public function __invoke(ServerRequestInterface $serverRequest): ResponseInterface
+	public function middlewares(): array
+	{
+		return [];
+	}
+
+	public function handle(ServerRequestInterface $serverRequest): ResponseInterface
 	{
 		$fakeRoute = new FakeApiControllerRoute();
 		return $this->createRedirectResponse($fakeRoute->withPathParams(1234, 1234567));

@@ -12,7 +12,12 @@ use Webstract\Controller\PageController;
 
 final class FakePageController extends PageController
 {
-	public function __invoke(ServerRequestInterface $serverRequest): ResponseInterface {
+	public function middlewares(): array
+	{
+		return [];
+	}
+
+	public function handle(ServerRequestInterface $serverRequest): ResponseInterface {
 		$content = new FakeContent(['a', 'b'], 'paragraph');
 		$page = new FakePage($content);
 		return $this->createHtmlResponse($page);

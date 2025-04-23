@@ -9,7 +9,7 @@ use Test\Support\JsonSerializableClass;
 test('should works properly when invoked', function () {
 	$controller = new FakeApiController($this->response, $this->stream);
 
-	$result = $controller($this->serverRequest);
+	$result = $controller->handle($this->serverRequest);
 
 	expect($result)->toBeInstanceOf(ResponseInterface::class);
 	expect((string) $result->getBody())->toBe('{"message":"Hello, World!"}');
