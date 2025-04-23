@@ -7,9 +7,10 @@ namespace Test\Support\Route;
 use Webstract\Request\RequestMethod;
 use Webstract\Route\RouteDefinition;
 use Webstract\Route\RoutePathTemplate;
-use Test\Support\Controller\FakeController;
+use Test\Support\Controller\FakeActionController;
+use Test\Support\Controller\FakePageController;
 
-final class FakeFallbackRoute extends RoutePathTemplate implements RouteDefinition
+final class FakePageControllerRoute extends RoutePathTemplate implements RouteDefinition
 {
 	public function getMethod(): RequestMethod
 	{
@@ -18,18 +19,16 @@ final class FakeFallbackRoute extends RoutePathTemplate implements RouteDefiniti
 
 	public function getPattern(): string
 	{
-		// @todo can be used when we implemented controller input
-		// return '@^/not-found/?$@';
-		return '@^/not-found/?$@';
+		return '@^/page/?$@';
 	}
 
 	public function getPathFormat(): string
 	{
-		return '/not-found';
+		return '/page';
 	}
 
 	public function getController(): string
 	{
-		return FakeController::class;
+		return FakePageController::class;
 	}
 }

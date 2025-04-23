@@ -38,7 +38,7 @@ final class RequestHandler implements RequestHandlerInterface
 
 	public function handle(ServerRequestInterface $serverRequest): ResponseInterface
 	{
-		$routeDefinition = new RouteResolver($this->routeProvider)->resolve($serverRequest);
+		$routeDefinition = (new RouteResolver($this->routeProvider))->resolve($serverRequest);
 
 		return $this->invokeController($routeDefinition->getController(), $serverRequest);
 	}
@@ -55,16 +55,16 @@ final class RequestHandler implements RequestHandlerInterface
 
 		return match (true) {
 			$reflectedController->isSubclassOf(AsyncComponentController::class),
-			$reflectedController->isSubclassOf(PageController::class) => $this->instantiateRenderableStatefulController($controller),
-			$reflectedController->isSubclassOf(ActionController::class) => $this->instantiateStatefulController($controller),
-			$reflectedController->isSubclassOf(ApiController::class) => $this->instantiateStatelessController($controller),
-			default => throw new \RuntimeException('Cannot handle controller with subclass: ' . $reflectedController->getParentClass()->getName())
+			$reflectedController->isSubclassOf(PageController::class) => $this->renderableStatefulController($controller),
+			$reflectedController->isSubclassOf(ActionController::class) => $this->statefulController($controller),
+			$reflectedController->isSubclassOf(ApiController::class) => $this->statelessController($controller),
+			default => throw new \RuntimeException("Cannot handle controller: {$controller}")
 		};
 	}
 
-	private function instantiateRenderableStatefulController(string $controller): object
+	private function renderableStatefulController(string $controller): object
 	{
-		$this->sessionHandler->create();
+		$this->sessionHandler->initSession();
 
 		return new $controller(
 			$this->responseInterface,
@@ -74,9 +74,9 @@ final class RequestHandler implements RequestHandlerInterface
 		);
 	}
 
-	private function instantiateStatefulController(string $controller): object
+	private function statefulController(string $controller): object
 	{
-		$this->sessionHandler->create();
+		$this->sessionHandler->initSession();
 
 		return new $controller(
 			$this->responseInterface,
@@ -85,7 +85,7 @@ final class RequestHandler implements RequestHandlerInterface
 		);
 	}
 
-	private function instantiateStatelessController(string $controller): object
+	private function statelessController(string $controller): object
 	{
 		return new $controller(
 			$this->responseInterface,

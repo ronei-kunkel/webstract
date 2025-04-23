@@ -13,12 +13,12 @@ interface SessionHandler
 	 * @throws SessionProviderUnreachableException
 	 * @return void
 	 */
-	public function create(): void;
+	public function initSession(): void;
 
 	/**
 	 * @return void
 	 */
-	public function destroy(): void;
+	public function destroySession(): void;
 
 	/**
 	 * @param SessionKeyInterface $key
