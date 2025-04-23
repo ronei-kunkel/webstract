@@ -9,7 +9,7 @@ use Webstract\Route\RouteDefinition;
 use Webstract\Route\RoutePathTemplate;
 use Test\Support\Controller\FakeActionController;
 
-final class FakeSomePathRoute extends RoutePathTemplate implements RouteDefinition
+final class FakeActionControllerRoute extends RoutePathTemplate implements RouteDefinition
 {
 	public function getMethod(): RequestMethod
 	{

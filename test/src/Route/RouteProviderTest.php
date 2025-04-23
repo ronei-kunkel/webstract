@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 use Webstract\Route\RouteDefinition;
 use Webstract\Route\RouteProvider;
-use Test\Support\Route\FakeFallbackRoute;
-use Test\Support\Route\FakeRoute;
-use Test\Support\Route\FakeSomePathRoute;
+use Test\Support\Route\FakeFallbackBaseControllerRoute;
+use Test\Support\Route\FakeApiControllerRoute;
+use Test\Support\Route\FakeActionControllerRoute;
 
 test('should return registered routes', function () {
 	$routeProvider = new class implements RouteProvider {
@@ -16,19 +16,19 @@ test('should return registered routes', function () {
 		public function routes(): array
 		{
 			return [
-				new FakeRoute(),
-				new FakeSomePathRoute(),
+				new FakeApiControllerRoute(),
+				new FakeActionControllerRoute(),
 			];
 		}
 
 		public function fallbackRoute(): RouteDefinition
 		{
-			return new FakeFallbackRoute();
+			return new FakeFallbackBaseControllerRoute();
 		}
 	};
 
-	expect($routeProvider->routes()[0])->toBeInstanceOf(FakeRoute::class);
-	expect($routeProvider->routes()[1])->toBeInstanceOf(FakeSomePathRoute::class);
+	expect($routeProvider->routes()[0])->toBeInstanceOf(FakeApiControllerRoute::class);
+	expect($routeProvider->routes()[1])->toBeInstanceOf(FakeActionControllerRoute::class);
 });
 
 test('fallback route should return a falback route', function () {
@@ -39,16 +39,16 @@ test('fallback route should return a falback route', function () {
 		public function routes(): array
 		{
 			return [
-				new FakeRoute(),
-				new FakeSomePathRoute(),
+				new FakeApiControllerRoute(),
+				new FakeActionControllerRoute(),
 			];
 		}
 
 		public function fallbackRoute(): RouteDefinition
 		{
-			return new FakeFallbackRoute();
+			return new FakeFallbackBaseControllerRoute();
 		}
 	};
 
-	expect($routeProvider->fallbackRoute())->toBeInstanceOf(FakeFallbackRoute::class);
+	expect($routeProvider->fallbackRoute())->toBeInstanceOf(FakeFallbackBaseControllerRoute::class);
 });

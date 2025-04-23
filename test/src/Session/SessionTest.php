@@ -9,16 +9,16 @@ use Test\Support\Session\FakeSessionHandler;
 
 beforeEach(function () {
 	$this->session = new FakeSessionHandler();
-	$this->session->create();
+	$this->session->initSession();
 });
 
-afterEach(fn() => $this->session->destroy());
+afterEach(fn() => $this->session->destroySession());
 
 test('it can create and destroy a session', function () {
-	$this->session->create();
+	$this->session->initSession();
 	expect($this->session->has(FakeSessionKey::TEST))->toBeFalse();
 
-	$this->session->destroy();
+	$this->session->destroySession();
 	expect(fn() => $this->session->has(FakeSessionKey::TEST))->toThrow(SessionProviderUnreachableException::class);
 });
 
@@ -72,6 +72,6 @@ test('it can consume or return a default value', function () {
 });
 
 test('it throws an exception if session provider is unreachable', function () {
-	$this->session->destroy();
+	$this->session->destroySession();
 	$this->session->set(FakeSessionKey::TEST, 'value');
 })->throws(SessionProviderUnreachableException::class);

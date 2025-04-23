@@ -13,12 +13,12 @@ final class FakeSessionHandler implements SessionHandler
 {
 	private static ?array $session = null;
 
-	public function create(): void
+	public function initSession(): void
 	{
 		self::$session = [];
 	}
 
-	public function destroy(): void
+	public function destroySession(): void
 	{
 		self::$session = null;
 	}

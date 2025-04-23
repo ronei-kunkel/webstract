@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Webstract\Controller\AsyncComponentController;
 use Webstract\Web\AsyncComponent;
-use Test\Support\Route\FakeRoute;
+use Test\Support\Route\FakeApiControllerRoute;
 use Test\Support\Web\FakeAsyncComponent\FakeRenderableAsyncComponent;
 
 final class FakeAsyncComponentController extends AsyncComponentController
@@ -31,7 +31,7 @@ final class FakeAsyncComponentController extends AsyncComponentController
 
 	public function testCreateRedirectResponse(): ResponseInterface
 	{
-		$route = (new FakeRoute())->withPathParams('123', 123);
+		$route = (new FakeApiControllerRoute())->withPathParams('123', 123);
 		return $this->createRedirectResponse($route);
 	}
 }
