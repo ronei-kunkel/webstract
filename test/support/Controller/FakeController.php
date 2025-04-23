@@ -8,7 +8,12 @@ use Webstract\Controller\Controller;
 
 class FakeController extends Controller
 {
-	public function __invoke(ServerRequestInterface $serverRequest): ResponseInterface
+	public function middlewares(): array
+	{
+		return [];
+	}
+
+	public function handle(ServerRequestInterface $serverRequest): ResponseInterface
 	{
 		$this->streamInterface->write('Hello, World!');
 		return $this->responseInterface->withBody($this->streamInterface);

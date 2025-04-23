@@ -15,7 +15,7 @@ test('should works properly with renderable component', function () {
 		new TwigTemplateEngineRenderer()
 	);
 
-	$response = $controller($this->serverRequest);
+	$response = $controller->handle($this->serverRequest);
 
 	expect((string) $response->getBody())->toBe(
 		<<<HTML

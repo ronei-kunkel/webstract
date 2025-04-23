@@ -12,7 +12,12 @@ use Test\Support\Web\FakePage\FakePage;
 
 test('Page controller should works properly', function () {
 	$pageController = new class($this->response, $this->stream, new FakeSessionHandler(), new TwigTemplateEngineRenderer()) extends PageController {
-		public function __invoke(ServerRequestInterface $serverRequest): ResponseInterface
+		public function middlewares(): array
+		{
+			return [];
+		}
+
+		public function handle(ServerRequestInterface $serverRequest): ResponseInterface
 		{
 			$content = new FakeContent(
 				['test1', 'test2'],
@@ -23,7 +28,7 @@ test('Page controller should works properly', function () {
 		}
 	};
 
-	$response = $pageController($this->serverRequest);
+	$response = $pageController->handle($this->serverRequest);
 
 	expect((string) $response->getBody())->toBe(
 		<<<HTML

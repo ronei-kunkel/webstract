@@ -8,5 +8,5 @@ use Psr\Http\Message\ServerRequestInterface;
 
 final class FakeUnextendedAnyAbstractController
 {
-	public function __invoke(ServerRequestInterface $serverRequest): void {}
+	public function handle(ServerRequestInterface $serverRequest): void {}
 }

@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Webstract\Route;
+namespace Webstract\Router;
 
 use Psr\Http\Message\ServerRequestInterface;
+use Webstract\Route\RouteDefinition;
+use Webstract\Route\RouteProvider;
 
-final class RouteResolver
+final class Router
 {
 	public function __construct(private readonly RouteProvider $routeProvider) {}
 

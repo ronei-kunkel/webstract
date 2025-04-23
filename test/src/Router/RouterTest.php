@@ -6,7 +6,7 @@ use Nyholm\Psr7\ServerRequest;
 use Webstract\Request\RequestMethod;
 use Webstract\Route\RouteDefinition;
 use Webstract\Route\RouteProvider;
-use Webstract\Route\RouteResolver;
+use Webstract\Router\Router;
 use Test\Support\Controller\FakeActionController;
 use Test\Support\Controller\FakeController;
 use Test\Support\Route\FakeFallbackBaseControllerRoute;
@@ -32,7 +32,7 @@ test('should resolve properly', function () {
 		}
 	};
 	$serverRequest = new ServerRequest('POST', 'http://localhost/some/11/path');
-	$routeResolver = new RouteResolver($routeProvider);
+	$routeResolver = new Router($routeProvider);
 
 	$routeDefinition = $routeResolver->resolve($serverRequest);
 
@@ -61,7 +61,7 @@ test('should return fallback route when not match request', function () {
 		}
 	};
 	$serverRequest = new ServerRequest('POST', 'http://localhost/some/11/path/11');
-	$routeResolver = new RouteResolver($routeProvider);
+	$routeResolver = new Router($routeProvider);
 
 	$routeDefinition = $routeResolver->resolve($serverRequest);
 

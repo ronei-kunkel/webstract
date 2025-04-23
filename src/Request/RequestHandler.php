@@ -14,9 +14,9 @@ use ReflectionClass;
 use Webstract\Controller\ActionController;
 use Webstract\Controller\ApiController;
 use Webstract\Controller\AsyncComponentController;
+use Webstract\Controller\Controller;
 use Webstract\Controller\PageController;
-use Webstract\Route\RouteProvider;
-use Webstract\Route\RouteResolver;
+use Webstract\Router\Router;
 use Webstract\Session\SessionHandler;
 use Webstract\TemplateEngine\TemplateEngineRenderer;
 
@@ -26,7 +26,7 @@ final class RequestHandler implements RequestHandlerInterface
 	private readonly StreamInterface $streamInterface;
 
 	public function __construct(
-		private readonly RouteProvider $routeProvider,
+		private readonly Router $router,
 		private readonly SessionHandler $sessionHandler,
 		private readonly TemplateEngineRenderer $templateEngineRenderer,
 		ResponseFactoryInterface $responseFactory,
@@ -38,18 +38,16 @@ final class RequestHandler implements RequestHandlerInterface
 
 	public function handle(ServerRequestInterface $serverRequest): ResponseInterface
 	{
-		$routeDefinition = (new RouteResolver($this->routeProvider))->resolve($serverRequest);
+		$routeDefinition = $this->router->resolve($serverRequest);
 
-		return $this->invokeController($routeDefinition->getController(), $serverRequest);
+		$controllerInstance = $this->resolveControllerInstance($routeDefinition->getController());
+
+		$pipeline = new RequestHandlerPipeline($controllerInstance);
+
+		return $pipeline->handle($serverRequest);
 	}
 
-	private function invokeController(string $controller, ServerRequestInterface $serverRequest): ResponseInterface
-	{
-		$controllerInstance = $this->resolveControllerInstance($controller);
-		return $controllerInstance($serverRequest);
-	}
-
-	private function resolveControllerInstance(string $controller): object
+	private function resolveControllerInstance(string $controller): Controller
 	{
 		$reflectedController = new ReflectionClass($controller);
 
