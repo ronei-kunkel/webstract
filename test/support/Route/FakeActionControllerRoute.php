@@ -11,25 +11,23 @@ use Test\Support\Controller\FakeActionController;
 
 final class FakeActionControllerRoute extends RoutePathTemplate implements RouteDefinition
 {
-	public function getMethod(): RequestMethod
+	public static function getMethod(): RequestMethod
 	{
 		return RequestMethod::POST;
 	}
 
-	public function getPattern(): string
+	public static function getPattern(): string
 	{
-		// @todo can be used when we implemented controller input
-		// return '@^/some/(?<some>\d+)/path/?$@';
-		return '@^/some/\d+/path/?$@';
+		return '/some/{some:\d+}/path[/]';
+	}
+
+	public static function getController(): string
+	{
+		return FakeActionController::class;
 	}
 
 	public function getPathFormat(): string
 	{
 		return '/some/%s/path';
-	}
-
-	public function getController(): string
-	{
-		return FakeActionController::class;
 	}
 }

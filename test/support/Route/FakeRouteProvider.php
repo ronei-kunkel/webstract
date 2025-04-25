@@ -4,24 +4,17 @@ declare(strict_types=1);
 
 namespace Test\Support\Route;
 
-use Webstract\Route\RouteDefinition;
-use Webstract\Route\RouteProvider;
-
-final class FakeRouteProvider implements RouteProvider
+final class FakeRouteProvider
 {
-	public function routes(): array
+	public function getRoutes(): array
 	{
 		return [
-			new FakeActionControllerRoute(),
-			new FakeApiControllerRoute(),
-			new FakeAsyncComponentControllerRoute(),
-			new FakePageControllerRoute(),
-			new FakeExceptionResolverRoute(),
+			FakeActionControllerRoute::getController() => FakeActionControllerRoute::class,
+			FakeApiControllerRoute::getController() => FakeApiControllerRoute::class,
+			FakeAsyncComponentControllerRoute::getController() => FakeAsyncComponentControllerRoute::class,
+			FakePageControllerRoute::getController() => FakePageControllerRoute::class,
+			FakeExceptionResolverRoute::getController() => FakeExceptionResolverRoute::class,
+			FakeFallbackBaseControllerRoute::getController() => FakeFallbackBaseControllerRoute::class,
 		];
-	}
-
-	public function fallbackRoute(): RouteDefinition
-	{
-		return new FakeFallbackBaseControllerRoute();
 	}
 }

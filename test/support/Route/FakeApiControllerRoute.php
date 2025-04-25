@@ -11,25 +11,23 @@ use Test\Support\Controller\FakeApiController;
 
 final class FakeApiControllerRoute extends RoutePathTemplate implements RouteDefinition
 {
-	public function getMethod(): RequestMethod
+	public static function getMethod(): RequestMethod
 	{
 		return RequestMethod::GET;
 	}
 
-	public function getPattern(): string
+	public static function getPattern(): string
 	{
-		// @todo can be used when we implemented controller input
-		// return '@^/fake/(?<fake>\d+)/opa/(?<opa>\d+)/?$@';
-		return '@^/fake/\d+/opa/\d+/?$@';
+		return '/fake/{fake:\d+}/opa/{opa\d+}[/]';
+	}
+
+	public static function getController(): string
+	{
+		return FakeApiController::class;
 	}
 
 	public function getPathFormat(): string
 	{
 		return '/fake/%s/opa/%s';
-	}
-
-	public function getController(): string
-	{
-		return FakeApiController::class;
 	}
 }

@@ -11,19 +11,17 @@ use Webstract\Route\RoutePathTemplate;
 
 final class FakeExceptionResolverRoute extends RoutePathTemplate implements RouteDefinition
 {
-	public function getMethod(): RequestMethod
+	public static function getMethod(): RequestMethod
 	{
 		return RequestMethod::PATCH;
 	}
 
-	public function getPattern(): string
+	public static function getPattern(): string
 	{
-		// @todo can be used when we implemented controller input
-		// return '@^/oops/?$@';
-		return '@^/oops/?$@';
+		return '/oops[/]';
 	}
 
-	public function getController(): string
+	public static function getController(): string
 	{
 		return FakeUnextendedAnyAbstractController::class;
 	}

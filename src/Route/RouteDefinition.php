@@ -6,14 +6,9 @@ namespace Webstract\Route;
 
 use Webstract\Request\RequestMethod;
 
-interface RouteDefinition
+interface RouteDefinition extends RouteHandleable
 {
-	public function getMethod(): RequestMethod;
+	public static function getMethod(): RequestMethod;
 
-	public function getPattern(): string;
-
-	/**
-	 * @return class-string
-	 */
-	public function getController(): string;
+	public static function getPattern(): string;
 }

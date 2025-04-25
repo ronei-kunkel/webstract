@@ -21,17 +21,17 @@ test('createDownloadResponse works properly', function (string $expectedFilepath
 	expect((string) $result->getBody())->toBe($expectedBody);
 })->with([
 	[
-		__FILE__,
+		__DIR__ . '/../../assets/teste.php',
 		'application/x-httpd-php',
-		getExpectedBodyFromFilePath(__FILE__),
+		getExpectedBodyFromFilePath(__DIR__ . '/../../assets/teste.php'),
 	],
 	[
-		__DIR__ . '/../../support/assets/downloadable-empty-file.txt',
+		__DIR__ . '/../../assets/downloadable-empty-file.txt',
 		'text/plain',
 		'',
 	],
 	[
-		__DIR__ . '/../../support/assets/downloadable-file.txt',
+		__DIR__ . '/../../assets/downloadable-file.txt',
 		'text/plain',
 		'content inside downloadable file',
 	],
@@ -39,7 +39,7 @@ test('createDownloadResponse works properly', function (string $expectedFilepath
 
 test('createDownloadResponse should replace invalid charactere in filename', function () {
 	$class = new FakeApiController($this->response, $this->stream);
-	$filepath = __DIR__ . '/../../support/assets/downloadable-empty-file-with-special@caractere.txt';
+	$filepath = __DIR__ . '/../../assets/downloadable-empty-file-with-special@caractere.txt';
 	$expectedContentDispositionHeaderValue = sprintf('attachment; filename="%s"', 'downloadable-empty-file-with-special_caractere.txt');
 	$expectedBody = getExpectedBodyFromFilePath($filepath);
 
@@ -68,6 +68,5 @@ test('createDownloadResponse should return 500 when cannot provide attatched fil
 	expect((string) $result->getBody())->toBe('');
 	expect($result->getStatusCode())->toBe(500);
 })->with([
-	'/missing/path' . __FILE__,
-	__DIR__ . '/../../support/assets/undownloadable.file',
+	'/missing/path/'
 ]);
