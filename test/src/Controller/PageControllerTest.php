@@ -9,6 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Webstract\Controller\PageController;
 use Test\Support\Session\FakeSessionHandler;
 use Test\Support\TemplateEngine\TwigTemplateEngineRenderer;
+use Test\Support\Web\FakeComponent\FakeComponent;
 use Test\Support\Web\FakeContent\FakeContent;
 use Test\Support\Web\FakePage\FakePage;
 
@@ -25,7 +26,11 @@ test('Page controller should works properly', function () {
 				['test1', 'test2'],
 				'paragraph',
 			);
-			$page = new FakePage($content);
+			$fakeComponent = new FakeComponent('Component text');
+			$page = new FakePage(
+				$content,
+				$fakeComponent,
+			);
 			return $this->createHtmlResponse($page);
 		}
 	};
@@ -59,7 +64,10 @@ test('Page controller should works properly', function () {
 		</script>
 				<script>var fakeContentDate = new Date();
 		</script>
-				<script defer src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+				<textarea>
+			Component text
+		</textarea>
+			<script defer src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 		</body>
 		</html>
 		HTML
