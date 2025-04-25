@@ -7,28 +7,27 @@ namespace Test\Support\Route;
 use Webstract\Request\RequestMethod;
 use Webstract\Route\RouteDefinition;
 use Webstract\Route\RoutePathTemplate;
-use Test\Support\Controller\FakeActionController;
 use Test\Support\Controller\FakePageController;
 
 final class FakePageControllerRoute extends RoutePathTemplate implements RouteDefinition
 {
-	public function getMethod(): RequestMethod
+	public static function getMethod(): RequestMethod
 	{
 		return RequestMethod::GET;
 	}
 
-	public function getPattern(): string
+	public static function getPattern(): string
 	{
-		return '@^/page/?$@';
+		return '/page[/]';
+	}
+
+	public static function getController(): string
+	{
+		return FakePageController::class;
 	}
 
 	public function getPathFormat(): string
 	{
 		return '/page';
-	}
-
-	public function getController(): string
-	{
-		return FakePageController::class;
 	}
 }

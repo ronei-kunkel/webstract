@@ -11,25 +11,23 @@ use Test\Support\Controller\FakeAsyncComponentController;
 
 final class FakeAsyncComponentControllerRoute extends RoutePathTemplate implements RouteDefinition
 {
-	public function getMethod(): RequestMethod
+	public static function getMethod(): RequestMethod
 	{
 		return RequestMethod::POST;
 	}
 
-	public function getPattern(): string
+	public static function getPattern(): string
 	{
-		// @todo can be used when we implemented controller input
-		// return '@^/some/(?<some>\d+)/path/?$@';
-		return '@^/async-component/?$@';
+		return '/async-component[/]';
+	}
+
+	public static function getController(): string
+	{
+		return FakeAsyncComponentController::class;
 	}
 
 	public function getPathFormat(): string
 	{
 		return '/async-component';
-	}
-
-	public function getController(): string
-	{
-		return FakeAsyncComponentController::class;
 	}
 }

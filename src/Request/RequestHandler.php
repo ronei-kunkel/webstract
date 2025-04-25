@@ -16,7 +16,7 @@ use Webstract\Controller\ApiController;
 use Webstract\Controller\AsyncComponentController;
 use Webstract\Controller\Controller;
 use Webstract\Controller\PageController;
-use Webstract\Router\Router;
+use Webstract\Route\RouteResolver;
 use Webstract\Session\SessionHandler;
 use Webstract\TemplateEngine\TemplateEngineRenderer;
 
@@ -26,7 +26,7 @@ final class RequestHandler implements RequestHandlerInterface
 	private readonly StreamInterface $streamInterface;
 
 	public function __construct(
-		private readonly Router $router,
+		private readonly RouteResolver $router,
 		private readonly SessionHandler $sessionHandler,
 		private readonly TemplateEngineRenderer $templateEngineRenderer,
 		ResponseFactoryInterface $responseFactory,
@@ -53,14 +53,15 @@ final class RequestHandler implements RequestHandlerInterface
 
 		return match (true) {
 			$reflectedController->isSubclassOf(AsyncComponentController::class),
-			$reflectedController->isSubclassOf(PageController::class) => $this->renderableStatefulController($controller),
+			$reflectedController->isSubclassOf(PageController::class) => $this->statefulControllerWithRender($controller),
 			$reflectedController->isSubclassOf(ActionController::class) => $this->statefulController($controller),
-			$reflectedController->isSubclassOf(ApiController::class) => $this->statelessController($controller),
+			$reflectedController->isSubclassOf(ApiController::class),
+			$reflectedController->isSubclassOf(Controller::class) => $this->statelessController($controller),
 			default => throw new \RuntimeException("Cannot handle controller: {$controller}")
 		};
 	}
 
-	private function renderableStatefulController(string $controller): object
+	private function statefulControllerWithRender(string $controller): object
 	{
 		$this->sessionHandler->initSession();
 

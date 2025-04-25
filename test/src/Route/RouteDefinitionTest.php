@@ -9,12 +9,12 @@ use Test\Support\Controller\FakeController;
 test('Should works properly', function () {
 	$definitions = new class implements RouteDefinition {
 
-		public function getMethod(): RequestMethod
+		public static function getMethod(): RequestMethod
 		{
 			return RequestMethod::OPTIONS;
 		}
 
-		public function getPattern(): string
+		public static function getPattern(): string
 		{
 			return '@/?@';
 		}
@@ -22,7 +22,7 @@ test('Should works properly', function () {
 		/**
 		 * @return class-string
 		 */
-		public function getController(): string
+		public static function getController(): string
 		{
 			return FakeController::class;
 		}

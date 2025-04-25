@@ -11,25 +11,23 @@ use Test\Support\Controller\FakeController;
 
 final class FakeFallbackBaseControllerRoute extends RoutePathTemplate implements RouteDefinition
 {
-	public function getMethod(): RequestMethod
+	public static function getMethod(): RequestMethod
 	{
 		return RequestMethod::GET;
 	}
 
-	public function getPattern(): string
+	public static function getPattern(): string
 	{
-		// @todo can be used when we implemented controller input
-		// return '@^/not-found/?$@';
-		return '@^/not-found/?$@';
+		return '/not-found[/]';
+	}
+
+	public static function getController(): string
+	{
+		return FakeController::class;
 	}
 
 	public function getPathFormat(): string
 	{
 		return '/not-found';
-	}
-
-	public function getController(): string
-	{
-		return FakeController::class;
 	}
 }
