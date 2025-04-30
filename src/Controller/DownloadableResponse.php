@@ -36,7 +36,7 @@ trait DownloadableResponse
 			->withStatus(200);
 	}
 
-	private function createPdfContentDownloadableResponse(PdfContent $pdfContent): ResponseInterface
+	protected function createPdfContentDownloadableResponse(PdfContent $pdfContent): ResponseInterface
 	{
 		$filename = preg_replace('/[^A-Za-z0-9\-_\.]/', '_', $pdfContent->getName());
 		$contentType = HttpContentType::PDF;
