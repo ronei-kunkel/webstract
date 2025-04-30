@@ -15,6 +15,7 @@ final class FakeRouteProvider
 			FakePageControllerRoute::getController() => FakePageControllerRoute::class,
 			FakeExceptionResolverRoute::getController() => FakeExceptionResolverRoute::class,
 			FakeFallbackBaseControllerRoute::getController() => FakeFallbackBaseControllerRoute::class,
+			FakeControllerWithMiddlewaresRoute::getController() => FakeControllerWithMiddlewaresRoute::class,
 		];
 	}
 }

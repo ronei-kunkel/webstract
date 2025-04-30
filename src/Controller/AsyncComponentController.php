@@ -15,37 +15,37 @@ use Webstract\Web\AsyncComponent;
 abstract class AsyncComponentController extends Controller
 {
 	public function __construct(
-		protected readonly ResponseInterface $responseInterface,
-		protected readonly StreamInterface $streamInterface,
-		protected readonly SessionHandler $sessionService,
-		private readonly TemplateEngineRenderer $templateEngineRenderer,
+		protected readonly ResponseInterface $response,
+		protected readonly StreamInterface $stream,
+		protected readonly SessionHandler $session,
+		private readonly TemplateEngineRenderer $templateEngine,
 	) {}
 
 	protected function createRedirectResponse(RoutePathTemplate $route): ResponseInterface
 	{
-		return $this->responseInterface
+		return $this->response
 			->withHeader('hx-redirect', $route->renderPath())
 			->withStatus(303);
 	}
 
 	protected function createEmptyResponse(): ResponseInterface
 	{
-		return $this->responseInterface
+		return $this->response
 			->withHeader(HttpContentType::getHeaderName(), HttpContentType::HTML->value . '; charset=utf-8')
-			->withBody($this->streamInterface)
+			->withBody($this->stream)
 			->withStatus(200);
 	}
 
 	protected function createHtmlResponse(AsyncComponent $component): ResponseInterface
 	{
 		$component = $component->shouldRendered()
-			? $this->templateEngineRenderer->render($component->htmlPath(), $component->getContext())
+			? $this->templateEngine->render($component->htmlPath(), $component->getContext())
 			: file_get_contents($component->htmlPath());
 
-		$this->streamInterface->write($component);
-		return $this->responseInterface
+		$this->stream->write($component);
+		return $this->response
 			->withHeader(HttpContentType::getHeaderName(), HttpContentType::HTML->value . '; charset=utf-8')
-			->withBody($this->streamInterface)
+			->withBody($this->stream)
 			->withStatus(200);
 	}
 }

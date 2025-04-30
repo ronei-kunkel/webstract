@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Webstract\Request;
 
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -12,12 +13,15 @@ use Webstract\Controller\Controller;
 
 final class RequestHandlerPipeline implements RequestHandlerInterface
 {
+	private readonly Controller $controller;
 	private array $middlewares;
 
 	public function __construct(
-		private readonly Controller $controller
+		string $controller,
+		private readonly ContainerInterface $container,
 	) {
-		$this->middlewares = $controller->middlewares();
+		$this->controller = $container->get($controller);
+		$this->middlewares = $this->controller->middlewares();
 	}
 
 	/** @throws \RuntimeException */
@@ -29,7 +33,7 @@ final class RequestHandlerPipeline implements RequestHandlerInterface
 
 		$middleware = array_shift($this->middlewares);
 
-		// @todo here should be instantiate the middleware instead instantiate into middlewares method inside controller
+		$middleware = $this->container->get($middleware);
 
 		if (!$middleware instanceof MiddlewareInterface) {
 			throw new \RuntimeException("Middleware " . get_class($middleware) . " does not implement Psr\Http\Server\MiddlewareInterface");

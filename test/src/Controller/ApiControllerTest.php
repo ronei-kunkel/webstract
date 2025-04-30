@@ -5,9 +5,13 @@ declare(strict_types=1);
 use Psr\Http\Message\ResponseInterface;
 use Test\Support\Controller\FakeApiController;
 use Test\Support\JsonSerializableClass;
+use Test\Support\Pdf\DompdfPdfGenerator;
+use Test\Support\TemplateEngine\TwigTemplateEngineRenderer;
 
-test('should works properly when invoked', function () {
-	$controller = new FakeApiController($this->response, $this->stream);
+test('should works properly', function () {
+	$pdfGenerator = new DompdfPdfGenerator(new TwigTemplateEngineRenderer());
+	
+	$controller = new FakeApiController($this->response, $this->stream, $pdfGenerator);
 
 	$result = $controller->handle($this->serverRequest);
 
@@ -18,7 +22,9 @@ test('should works properly when invoked', function () {
 });
 
 test('createJsonResponse handles expected entries gracefully', function (mixed $expectedContent, string $expectedBodyResult) {
-	$controller = new FakeApiController($this->response, $this->stream);
+	$pdfGenerator = new DompdfPdfGenerator(new TwigTemplateEngineRenderer());
+	
+	$controller = new FakeApiController($this->response, $this->stream, $pdfGenerator);
 
 	$result = $controller->testCreateJsonResponse($expectedContent);
 
@@ -33,7 +39,9 @@ test('createJsonResponse handles expected entries gracefully', function (mixed $
 ]);
 
 test('createJsonResponse throw exception when value not handable', function (mixed $expectedContent) {
-	$controller = new FakeApiController($this->response, $this->stream);
+	$pdfGenerator = new DompdfPdfGenerator(new TwigTemplateEngineRenderer());
+	
+	$controller = new FakeApiController($this->response, $this->stream, $pdfGenerator);
 
 	$controller->testCreateJsonResponse($expectedContent);
 })->with([1, '', '1', new stdClass()])->throws(TypeError::class);

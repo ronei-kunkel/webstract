@@ -8,6 +8,10 @@ use Webstract\Controller\Controller;
 
 class FakeMethodNotAllowedController extends Controller
 {
+	public function __construct(
+		protected readonly ResponseInterface $response,
+	) {}
+
 	public function middlewares(): array
 	{
 		return [];
@@ -15,6 +19,6 @@ class FakeMethodNotAllowedController extends Controller
 
 	public function handle(ServerRequestInterface $serverRequest): ResponseInterface
 	{
-		return $this->responseInterface->withStatus(405);
+		return $this->response->withStatus(405);
 	}
 }

@@ -1,7 +1,6 @@
 {
     "name": "ronei-kunkel/webstract",
     "description": "The web abstraction package",
-    "version": "2.0.0-dev",
     "type": "library",
     "require-dev": {
         "pestphp/pest": "^3.8",
@@ -9,7 +8,9 @@
         "nyholm/psr7": "^1.8",
         "nyholm/psr7-server": "^1.1",
         "twig/twig": "^3.20",
-        "nikic/fast-route": "^1.3"
+        "nikic/fast-route": "^1.3",
+        "dompdf/dompdf": "^3.1",
+        "php-di/php-di": "^7.0"
     },
     "license": "MIT",
     "autoload": {
@@ -34,7 +35,8 @@
     "require": {
         "psr/http-message": "^2.0",
         "psr/http-server-handler": "^1.0",
-        "psr/http-server-middleware": "^1.0"
+        "psr/http-server-middleware": "^1.0",
+        "psr/container": "^2.0"
     },
     "config": {
         "allow-plugins": {
@@ -42,6 +44,6 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/pest --test-directory test --ci"
+        "test": "vendor/bin/pest --test-directory test --ci --no-logging --do-not-cache-result --profile"
     }
 }
