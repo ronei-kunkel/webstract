@@ -1,24 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Test\Support\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Test\Support\Middleware\FakeWrongImplementationMiddleware;
 use Webstract\Controller\Controller;
 
-class FakeNotFoundController extends Controller
+final class FakeControllerWithWrongMiddleware extends Controller
 {
 	public function __construct(
-		protected readonly ResponseInterface $response,
+		private readonly ResponseInterface $response,
 	) {}
 
 	public function middlewares(): array
 	{
-		return [];
+		return [
+			FakeWrongImplementationMiddleware::class,
+		];
 	}
 
 	public function handle(ServerRequestInterface $serverRequest): ResponseInterface
 	{
-		return $this->response->withStatus(404);
+		return $this->response;
 	}
 }

@@ -7,9 +7,10 @@ namespace Test\Support\Route;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use Psr\Http\Message\ServerRequestInterface;
-use Webstract\Route\RouteHandleable;
 use Webstract\Route\RouteDefinition;
+use Webstract\Route\RouteHandleable;
 use Webstract\Route\RouteResolver;
+use Webstract\Route\RouteResolverOutput;
 
 use function FastRoute\simpleDispatcher;
 
@@ -17,7 +18,7 @@ final class FastRouteRouteResolver implements RouteResolver
 {
 	public function __construct(private readonly FakeRouteProvider $routeProvider) {}
 
-	public function resolve(ServerRequestInterface $serverRequest): RouteHandleable
+	public function resolve(ServerRequestInterface $serverRequest): RouteResolverOutput
 	{
 		/** @var RouteDefinition[] $routes */
 		$routes = $this->routeProvider->getRoutes();
@@ -30,25 +31,19 @@ final class FastRouteRouteResolver implements RouteResolver
 		$routeInfo = $dispatcher->dispatch($serverRequest->getMethod(), $serverRequest->getUri()->getPath());
 
 		return match ($routeInfo[0]) {
-			Dispatcher::NOT_FOUND => new FakeNotFoundRouteHandleable,
-			Dispatcher::METHOD_NOT_ALLOWED => new FakeMethodNotAllowedRouteHandleable,
-			Dispatcher::FOUND => new $routes[$routeInfo[1]],
+			Dispatcher::NOT_FOUND => $this->fallback(new FakeNotFoundRouteHandleable()),
+			Dispatcher::METHOD_NOT_ALLOWED => $this->fallback(new FakeMethodNotAllowedRouteHandleable()),
+			Dispatcher::FOUND => $this->found($routes, $routeInfo),
 		};
 	}
+
+	private function fallback(RouteHandleable $route): RouteResolverOutput
+	{
+		return new RouteResolverOutput($route, null);
+	}
+
+	private function found(array &$routes, array $routeInfo): RouteResolverOutput
+	{
+		return new RouteResolverOutput(new $routes[$routeInfo[1]], $routeInfo[2]);
+	}
 }
-
-
-		// switch () {
-		// 	case :
-		// 		// ... 404 Not Found
-		// 		break;
-		// 	case :
-		// 		$allowedMethods = $routeInfo[1];
-		// 		// ... 405 Method Not Allowed
-		// 		break;
-		// 	case :
-		// 		$handler = $routeInfo[1];
-		// 		$vars = $routeInfo[2];
-		// 		// ... call $handler with $vars
-		// 		break;
-		// }

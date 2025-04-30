@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 use Psr\Http\Message\ResponseInterface;
 use Test\Support\Controller\FakeApiController;
+use Test\Support\Pdf\DompdfPdfGenerator;
+use Test\Support\TemplateEngine\TwigTemplateEngineRenderer;
 
 test('createDownloadResponse works properly', function (string $expectedFilepath, string $expectedContentType, string $expectedBody) {
-	$class = new FakeApiController($this->response, $this->stream);
+	$pdfGenerator = new DompdfPdfGenerator(new TwigTemplateEngineRenderer());
+
+	$class = new FakeApiController($this->response, $this->stream, $pdfGenerator);
 	$filename = basename($expectedFilepath);
 	$expectedContentDispositionHeaderValue = sprintf('attachment; filename="%s"', $filename);
 
@@ -38,7 +42,8 @@ test('createDownloadResponse works properly', function (string $expectedFilepath
 ]);
 
 test('createDownloadResponse should replace invalid charactere in filename', function () {
-	$class = new FakeApiController($this->response, $this->stream);
+	$pdfGenerator = new DompdfPdfGenerator(new TwigTemplateEngineRenderer());
+	$class = new FakeApiController($this->response, $this->stream, $pdfGenerator);
 	$filepath = __DIR__ . '/../../assets/downloadable-empty-file-with-special@caractere.txt';
 	$expectedContentDispositionHeaderValue = sprintf('attachment; filename="%s"', 'downloadable-empty-file-with-special_caractere.txt');
 	$expectedBody = getExpectedBodyFromFilePath($filepath);
@@ -59,7 +64,8 @@ test('createDownloadResponse should close stream after use', function () {
 })->todo('will be implemented using a filewrapper that have oppen read and close responsibility and validation that was closed', 'ronei-kunkel');
 
 test('createDownloadResponse should return 500 when cannot provide attatched file', function (string $filePath) {
-	$class = new FakeApiController($this->response, $this->stream);
+	$pdfGenerator = new DompdfPdfGenerator(new TwigTemplateEngineRenderer());
+	$class = new FakeApiController($this->response, $this->stream, $pdfGenerator);
 
 	$result = $class->testCreateDownloadResponse($filePath);
 

@@ -2,16 +2,21 @@
 
 declare(strict_types=1);
 
+use DI\Container;
 use Mockery\MockInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\ServerRequest;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
+use Test\Support\Pdf\DompdfPdfGenerator;
 use Test\Support\Route\FakeRouteProvider;
 use Test\Support\Route\FastRouteRouteResolver;
 use Test\Support\Session\FakeSessionHandler;
 use Test\Support\TemplateEngine\TwigTemplateEngineRenderer;
+use Webstract\Pdf\PdfGenerator;
 use Webstract\Request\RequestHandler;
 use Webstract\Session\SessionHandler;
+use Webstract\TemplateEngine\TemplateEngineRenderer;
 
 beforeEach(function () {
 	$this->session = new FakeSessionHandler();
@@ -21,39 +26,49 @@ beforeEach(function () {
 afterEach(fn() => $this->session->destroySession());
 
 test('Request should hanlded properly', function () {
+	$psr17Factory = new Psr17Factory();
+
+	$container = new Container([
+		TemplateEngineRenderer::class => new TwigTemplateEngineRenderer(),
+		SessionHandler::class => new FakeSessionHandler(),
+		StreamInterface::class => $psr17Factory->createStream(),
+		ResponseInterface::class => $psr17Factory->createResponse(),
+		PdfGenerator::class => DI\create(DompdfPdfGenerator::class)->constructor(Di\get(TemplateEngineRenderer::class)),
+	]);
+
 	$routeProvider = new FakeRouteProvider();
 	$routeResolver = new FastRouteRouteResolver($routeProvider);
-	$templateEngine = new TwigTemplateEngineRenderer();
-	$psr17 = new Psr17Factory();
 	$request = new ServerRequest('POST', '/some/123/path');
 	$requestHandler = new RequestHandler(
 		$routeResolver,
-		$this->session,
-		$templateEngine,
-		$psr17,
-		$psr17
+		$container,
 	);
 
 	$response = $requestHandler->handle($request);
 
 	expect($response)->toBeInstanceOf(ResponseInterface::class);
-	expect((string) $response->getBody())->toBe('');
-	expect($response->getHeaders())->toBe(['Location' => ['/fake/1234/opa/1234567']]);
-	expect($response->getStatusCode())->toBe(303);
+	expect((string) $response->getBody())->toBe('{"some":"123"}');
+	expect($response->getHeaders())->toBe([]);
+	expect($response->getStatusCode())->toBe(200);
 });
 
 test('Should return 404 response when requested route are not registered', function () {
+	$psr17Factory = new Psr17Factory();
+
+	$container = new Container([
+		TemplateEngineRenderer::class => new TwigTemplateEngineRenderer(),
+		SessionHandler::class => new FakeSessionHandler(),
+		StreamInterface::class => $psr17Factory->createStream(),
+		ResponseInterface::class => $psr17Factory->createResponse(),
+		PdfGenerator::class => DI\create(DompdfPdfGenerator::class)->constructor(Di\get(TemplateEngineRenderer::class)),
+	]);
+
 	$routeProvider = new FakeRouteProvider();
 	$routeResolver = new FastRouteRouteResolver($routeProvider);
-	$templateEngine = new TwigTemplateEngineRenderer();
-	$psr17 = new Psr17Factory();
 	$request = new ServerRequest('GET', '/not-registered');
 	$requestHandler = new RequestHandler(
 		$routeResolver,
-		$this->session,
-		$templateEngine,
-		$psr17,
-		$psr17
+		$container,
 	);
 
 	$response = $requestHandler->handle($request);
@@ -65,17 +80,22 @@ test('Should return 404 response when requested route are not registered', funct
 });
 
 test('Should return 405 response when requested route method are not allowed', function () {
+	$psr17Factory = new Psr17Factory();
+
+	$container = new Container([
+		TemplateEngineRenderer::class => new TwigTemplateEngineRenderer(),
+		SessionHandler::class => new FakeSessionHandler(),
+		StreamInterface::class => $psr17Factory->createStream(),
+		ResponseInterface::class => $psr17Factory->createResponse(),
+		PdfGenerator::class => DI\create(DompdfPdfGenerator::class)->constructor(Di\get(TemplateEngineRenderer::class)),
+	]);
+
 	$routeProvider = new FakeRouteProvider();
 	$routeResolver = new FastRouteRouteResolver($routeProvider);
-	$templateEngine = new TwigTemplateEngineRenderer();
-	$psr17 = new Psr17Factory();
 	$request = new ServerRequest('POST', '/oops');
 	$requestHandler = new RequestHandler(
 		$routeResolver,
-		$this->session,
-		$templateEngine,
-		$psr17,
-		$psr17
+		$container,
 	);
 
 	$response = $requestHandler->handle($request);
@@ -84,59 +104,4 @@ test('Should return 405 response when requested route method are not allowed', f
 	expect((string) $response->getBody())->toBe('');
 	expect($response->getHeaders())->toBe([]);
 	expect($response->getStatusCode())->toBe(405);
-});
-
-test('Should init session when instantiate controller based on AsyncComponentController, PageController or ActionController', function (string $method, string $path) {
-	$routeProvider = new FakeRouteProvider();
-	$routeResolver = new FastRouteRouteResolver($routeProvider);
-	$templateEngine = new TwigTemplateEngineRenderer();
-	$psr17 = new Psr17Factory();
-	$request = new ServerRequest($method, $path);
-	/** @var SessionHandler|MockInterface */
-	$session = Mockery::mock(SessionHandler::class);
-
-	$session->shouldReceive('initSession')->once();
-
-	$requestHandler = new RequestHandler(
-		$routeResolver,
-		$session,
-		$templateEngine,
-		$psr17,
-		$psr17
-	);
-	$requestHandler->handle($request);
-})->with([
-	[
-		'POST', //FakeAsyncComponentControllerRoute
-		'/async-component',
-	],
-	[
-		'GET', //FakePageControllerRoute
-		'/page',
-	],
-	[
-		'POST', //FakePageControllerRoute
-		'/some/123/path',
-	],
-]);
-
-test('Should NOT INIT session when instantiate controller based on ApiController', function () {
-	$routeProvider = new FakeRouteProvider();
-	$routeResolver = new FastRouteRouteResolver($routeProvider);
-	$templateEngine = new TwigTemplateEngineRenderer();
-	$psr17 = new Psr17Factory();
-	$request = new ServerRequest('GET', '/fake/123/opa/123');
-	/** @var SessionHandler|MockInterface */
-	$session = Mockery::mock(SessionHandler::class);
-
-	$session->shouldReceive('initSession')->never();
-
-	$requestHandler = new RequestHandler(
-		$routeResolver,
-		$session,
-		$templateEngine,
-		$psr17,
-		$psr17
-	);
-	$requestHandler->handle($request);
 });
