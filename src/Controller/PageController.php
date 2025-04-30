@@ -16,10 +16,10 @@ abstract class PageController extends Controller
 	use SimpleRedirectableResponse;
 
 	public function __construct(
-		private readonly ResponseInterface $response,
-		private readonly StreamInterface $stream,
-		private readonly SessionHandler $session,
-		private readonly TemplateEngineRenderer $templateEngine,
+		protected readonly ResponseInterface $response,
+		protected readonly StreamInterface $stream,
+		protected readonly SessionHandler $session,
+		protected readonly TemplateEngineRenderer $templateEngine,
 	) {}
 
 	protected function createHtmlResponse(Page $page): ResponseInterface

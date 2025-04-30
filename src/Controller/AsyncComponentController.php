@@ -18,7 +18,7 @@ abstract class AsyncComponentController extends Controller
 		protected readonly ResponseInterface $response,
 		protected readonly StreamInterface $stream,
 		protected readonly SessionHandler $session,
-		private readonly TemplateEngineRenderer $templateEngine,
+		protected readonly TemplateEngineRenderer $templateEngine,
 	) {}
 
 	protected function createRedirectResponse(RoutePathTemplate $route): ResponseInterface
