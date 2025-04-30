@@ -43,13 +43,13 @@ trait DownloadableResponse
 
 		$renderedPdfContent = $this->pdfGenerator->generateContent($pdfContent);
 
-		$this->streamInterface->write($renderedPdfContent);
-		return $this->responseInterface
+		$this->stream->write($renderedPdfContent);
+		return $this->response
 			->withHeader($contentType::getHeaderName(), $contentType->value)
 			->withHeader('Content-Disposition', sprintf('attachment; filename="%s.pdf"', $filename))
 			->withHeader('Content-Length', (string) strlen($renderedPdfContent))
 			->withHeader('X-Content-Type-Options', 'nosniff')
-			->withBody($this->streamInterface)
+			->withBody($this->stream)
 			->withStatus(200);
 	}
 }
