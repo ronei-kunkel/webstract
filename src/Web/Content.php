@@ -11,8 +11,16 @@ abstract class Content
 	abstract public function cssPath(): ?string;
 	abstract public function jsPath(): ?string;
 	abstract public function htmlPath(): string;
+
 	public function contextKey(): string
 	{
 		return 'content';
+	}
+
+	public function context(): array
+	{
+		return [
+			$this->contextKey() => $this
+		];
 	}
 }
