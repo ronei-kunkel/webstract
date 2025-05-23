@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace Webstract\Web;
 
-abstract class AsyncComponent
+abstract class AsyncComponent extends Component
 {
 	// @todo implement a way to handle css and js content with htmx hooks after receive the response of async component
-	abstract public function cssPath(): ?string;
-	abstract public function jsPath(): ?string;
-	abstract public function htmlPath(): string;
 	abstract public function shouldRendered(): bool;
 
-	protected function contextKey(): string
+	public function contextKey(): string
 	{
 		return 'component';
 	}
