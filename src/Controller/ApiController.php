@@ -7,7 +7,7 @@ namespace Webstract\Controller;
 use JsonSerializable;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Webstract\Common\HttpContentType;
+use Webstract\Http\ContentType;
 
 abstract class ApiController implements Controller
 {
@@ -25,7 +25,7 @@ abstract class ApiController implements Controller
 		}
 
 		return $this->response
-			->withHeader(HttpContentType::getHeaderName(), HttpContentType::JSON->value)
+			->withHeader(ContentType::getHeaderName(), ContentType::JSON->value)
 			->withBody($this->stream)
 			->withStatus($statusCode);
 	}

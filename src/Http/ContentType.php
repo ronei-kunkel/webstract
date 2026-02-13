@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Webstract\Common;
+namespace Webstract\Http;
 
-enum HttpContentType: string
+enum ContentType: string
 {
 	case TXT = 'text/plain';
 	case HTML = 'text/html';
