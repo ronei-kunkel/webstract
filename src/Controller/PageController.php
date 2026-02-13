@@ -6,15 +6,13 @@ namespace Webstract\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Webstract\Common\HttpContentType;
+use Webstract\Http\ContentType;
 use Webstract\Web\Page;
 use Webstract\Session\SessionHandler;
 use Webstract\TemplateEngine\TemplateEngineRenderer;
 
-abstract class PageController extends Controller
+abstract class PageController implements Controller
 {
-	use SimpleRedirectableResponse;
-
 	public function __construct(
 		protected readonly ResponseInterface $response,
 		protected readonly StreamInterface $stream,
@@ -29,7 +27,7 @@ abstract class PageController extends Controller
 		);
 
 		return $this->response
-			->withHeader(HttpContentType::getHeaderName(), HttpContentType::HTML->value)
+			->withHeader(ContentType::getHeaderName(), ContentType::HTML->value)
 			->withBody($this->stream)
 			->withStatus(200);
 	}

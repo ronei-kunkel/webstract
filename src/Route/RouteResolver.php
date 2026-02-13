@@ -8,5 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 interface RouteResolver
 {
-	public function resolve(ServerRequestInterface $serverRequest): RouteResolverOutput;
+	public function __construct(RouteProviderInterface $routeProvider);
+
+	public function resolve(ServerRequestInterface $serverRequest): RouterOutput;
 }

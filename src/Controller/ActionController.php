@@ -6,18 +6,16 @@ namespace Webstract\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Webstract\Pdf\PdfGenerator;
+use Webstract\Controller\Traits\RedirectableResponse;
 use Webstract\Session\SessionHandler;
 
-abstract class ActionController extends Controller
+abstract class ActionController implements Controller
 {
-	use DownloadableResponse;
-	use SimpleRedirectableResponse;
+	use RedirectableResponse;
 
 	public function __construct(
 		protected readonly ResponseInterface $response,
 		protected readonly StreamInterface $stream,
 		protected readonly SessionHandler $session,
-		protected readonly PdfGenerator $pdfGenerator,
 	) {}
 }

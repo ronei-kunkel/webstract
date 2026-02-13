@@ -9,10 +9,10 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-abstract class Controller implements RequestHandlerInterface
+interface Controller extends RequestHandlerInterface
 {
 	/** @return MiddlewareInterface[]*/
-	abstract public function middlewares(): array;
+	public function middlewares(): array;
 
-	abstract public function handle(ServerRequestInterface $serverRequest): ResponseInterface;
+	public function handle(ServerRequestInterface $serverRequest): ResponseInterface;
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{ page.tabTitle() }}</title>
+	<style>{{ source(page.cssPath()) }}</style>
+	{% if page.content.cssPath() %}
+	<style>{{ source(page.content.cssPath()) }}</style>
+	{% endif %}
+</head>
+<body>
+	{% include page.content.htmlPath() %}
+	<script>{{ source(page.jsPath()) }}</script>
+	{% if page.content.jsPath() %}
+	<script>{{ source(page.content.jsPath()) }}</script>
+	{% endif %}
+	{% include page.fakeComponent.htmlPath() %}
+	<script defer src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+</body>
+</html>

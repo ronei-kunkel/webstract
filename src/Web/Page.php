@@ -16,7 +16,7 @@ abstract class Page
 	abstract public function htmlPath(): string;
 	protected function contextKey(): string
 	{
-		return 'template';
+		return 'page';
 	}
 
 	public function getContext(): array
