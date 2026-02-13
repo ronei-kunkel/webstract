@@ -10,5 +10,5 @@ interface RouteResolver
 {
 	public function __construct(RouteProviderInterface $routeProvider);
 
-	public function resolve(ServerRequestInterface $serverRequest): RouteResolverOutput;
+	public function resolve(ServerRequestInterface $serverRequest): RouterOutput;
 }

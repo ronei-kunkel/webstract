@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Webstract\Route;
 
-final class RouteResolverOutput
+final class RouterOutput
 {
 	public function __construct(
 		public readonly RouteHandleable $route,
