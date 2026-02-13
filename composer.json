@@ -3,14 +3,11 @@
     "description": "The web abstraction package",
     "type": "library",
     "require-dev": {
-        "pestphp/pest": "^3.8",
         "mockery/mockery": "^1.6",
         "nyholm/psr7": "^1.8",
         "nyholm/psr7-server": "^1.1",
         "twig/twig": "^3.20",
-        "nikic/fast-route": "^1.3",
-        "dompdf/dompdf": "^3.1",
-        "php-di/php-di": "^7.0"
+        "phpunit/phpunit": "^13.0"
     },
     "license": "MIT",
     "autoload": {
@@ -21,8 +18,7 @@
     "autoload-dev": {
         "psr-4": {
             "Test\\": "test/",
-            "Test\\Webstract\\": "test/src/",
-            "Test\\Support\\": "test/support/"
+            "Test\\Support\\": "test-support/"
         }
     },
     "authors": [
@@ -38,12 +34,7 @@
         "psr/http-server-middleware": "^1.0",
         "psr/container": "^2.0"
     },
-    "config": {
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
-    },
     "scripts": {
-        "test": "vendor/bin/pest --test-directory test --ci --no-logging --do-not-cache-result --profile"
+        "test": "vendor/bin/phpunit test --do-not-cache-result --no-progress --colors=never"
     }
 }
