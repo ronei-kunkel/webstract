@@ -11,10 +11,8 @@ use Webstract\Web\Page;
 use Webstract\Session\SessionHandler;
 use Webstract\TemplateEngine\TemplateEngineRenderer;
 
-abstract class PageController extends Controller
+abstract class PageController implements Controller
 {
-	use SimpleRedirectableResponse;
-
 	public function __construct(
 		protected readonly ResponseInterface $response,
 		protected readonly StreamInterface $stream,

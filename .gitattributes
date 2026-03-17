@@ -1,3 +1,4 @@
-/test               export-ignore
-/.git*              export-ignore
-/phpunit.xml        export-ignore
+/test*                 export-ignore
+/.git*                 export-ignore
+/phpunit.xml           export-ignore
+/.phpunit.result.cache export-ignore

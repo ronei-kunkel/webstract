@@ -15,8 +15,7 @@ final class RequestHandler implements RequestHandlerInterface
 	public function __construct(
 		private readonly RouteResolver $router,
 		private readonly ContainerInterface $container
-	) {
-	}
+	) {}
 
 	public function handle(ServerRequestInterface $serverRequest): ResponseInterface
 	{
