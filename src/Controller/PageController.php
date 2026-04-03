@@ -6,7 +6,7 @@ namespace Webstract\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Webstract\Common\HttpContentType;
+use Webstract\Http\ContentType;
 use Webstract\Web\Page;
 use Webstract\Session\SessionHandler;
 use Webstract\TemplateEngine\TemplateEngineRenderer;
@@ -27,7 +27,7 @@ abstract class PageController implements Controller
 		);
 
 		return $this->response
-			->withHeader(HttpContentType::getHeaderName(), HttpContentType::HTML->value)
+			->withHeader(ContentType::getHeaderName(), ContentType::HTML->value)
 			->withBody($this->stream)
 			->withStatus(200);
 	}

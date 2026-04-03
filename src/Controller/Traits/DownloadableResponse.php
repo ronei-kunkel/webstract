@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Webstract\Controller\Traits;
 
 use Psr\Http\Message\ResponseInterface;
-use Webstract\Common\HttpContentType;
+use Webstract\Http\ContentType;
 use Webstract\Pdf\PdfContent;
 
 trait DownloadableResponse
@@ -19,7 +19,7 @@ trait DownloadableResponse
 
 		$filename = preg_replace('/[^A-Za-z0-9\-_\.]/', '_', basename($filePath));
 
-		$contentType = HttpContentType::fromFilename($filename);
+		$contentType = ContentType::fromFilename($filename);
 		if ($contentType === null) {
 			return $this->response->withStatus(500);
 		}
@@ -29,7 +29,7 @@ trait DownloadableResponse
 		fclose($fileStream);
 
 		return $this->response
-			->withHeader(HttpContentType::getHeaderName(), $contentType->value)
+			->withHeader(ContentType::getHeaderName(), $contentType->value)
 			->withHeader('Content-Disposition', sprintf('attachment; filename="%s"', $filename))
 			->withHeader('Content-Length', (string) filesize($filePath))
 			->withHeader('X-Content-Type-Options', 'nosniff')
@@ -40,7 +40,7 @@ trait DownloadableResponse
 	protected function createPdfContentDownloadableResponse(PdfContent $pdfContent): ResponseInterface
 	{
 		$filename = preg_replace('/[^A-Za-z0-9\-_\.]/', '_', $pdfContent->getName());
-		$contentType = HttpContentType::PDF;
+		$contentType = ContentType::PDF;
 
 		$renderedPdfContent = $this->pdfGenerator->generateContent($pdfContent);
 
