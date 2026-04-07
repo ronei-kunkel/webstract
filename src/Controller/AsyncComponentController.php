@@ -6,7 +6,7 @@ namespace Webstract\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Webstract\Common\HttpContentType;
+use Webstract\Http\ContentType;
 use Webstract\Controller\Traits\AsyncRedirectableResponse;
 use Webstract\Session\SessionHandler;
 use Webstract\TemplateEngine\TemplateEngineRenderer;
@@ -26,7 +26,7 @@ abstract class AsyncComponentController implements Controller
 	protected function createEmptyResponse(): ResponseInterface
 	{
 		return $this->response
-			->withHeader(HttpContentType::getHeaderName(), HttpContentType::HTML->value . '; charset=utf-8')
+			->withHeader(ContentType::getHeaderName(), ContentType::HTML->value . '; charset=utf-8')
 			->withBody($this->stream)
 			->withStatus(200);
 	}
@@ -39,7 +39,7 @@ abstract class AsyncComponentController implements Controller
 
 		$this->stream->write($content);
 		return $this->response
-			->withHeader(HttpContentType::getHeaderName(), HttpContentType::HTML->value . '; charset=utf-8')
+			->withHeader(ContentType::getHeaderName(), ContentType::HTML->value . '; charset=utf-8')
 			->withBody($this->stream)
 			->withStatus(200);
 	}
