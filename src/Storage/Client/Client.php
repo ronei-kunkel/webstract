@@ -15,8 +15,8 @@ use Psr\Log\LoggerInterface;
 interface Client
 {
 	public function __construct(
-		readonly ApplicationEnvironmentVarVisitor $appEnv,
-		readonly FileStorageEnvironmentVarVisitor $fsEnv,
+		ApplicationEnvironmentVarVisitor $appEnv,
+		FileStorageEnvironmentVarVisitor $fsEnv,
 		LoggerInterface $log,
 	);
 	/** @see https://docs.aws.amazon.com/aws-sdk-php/v3/api/api-s3-2006-03-01.html#listobjectsv2 */
