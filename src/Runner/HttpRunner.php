@@ -14,6 +14,7 @@ use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 use Psr\Log\LoggerInterface;
 use Webstract\Request\RequestHandler;
+use Webstract\Request\SafeRequestHandlerServerErrorControllerProvider;
 use Webstract\Route\RouteProviderInterface;
 use Webstract\Route\RouterOutputProvider;
 
@@ -27,6 +28,7 @@ final class HttpRunner extends Runner
 		private readonly RouteProviderInterface $baseRouteProvider,
 		private readonly RouteProviderInterface $customRouteProvider,
 		private readonly RouterOutputProvider $routerOutputProvider,
+		private readonly SafeRequestHandlerServerErrorControllerProvider $serverErrorControllerProvider,
 	) {}
 
 	public function execute(): void
@@ -60,7 +62,7 @@ final class HttpRunner extends Runner
 			function ($severity, $message, $file, $line) {
 				$this->container->get(LoggerInterface::class)->emergency($message, ['exception' => new \ErrorException($message, 0, $severity, $file, $line)]);
 			}
-		);
+		)->registerServerErrorControllerProvider($this->serverErrorControllerProvider);
 		$request = new ServerRequestCreator(
 			$this->serverRequestFactory,
 			$this->uriFactory,

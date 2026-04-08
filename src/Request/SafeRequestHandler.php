@@ -16,6 +16,7 @@ final class SafeRequestHandler implements RequestHandlerInterface
 {
 	private readonly LoggerInterface $logger;
 	private readonly ApplicationEnvironmentVarVisitor $appEnv;
+	private readonly SafeRequestHandlerServerErrorControllerProvider $serverErrorControllerProvider;
 
 	private ?\Closure $errorHandlerFunction = null;
 	private ?\Closure $exceptionHandlerFunction = null;
@@ -27,6 +28,13 @@ final class SafeRequestHandler implements RequestHandlerInterface
 	) {
 		$this->logger = $this->container->get(LoggerInterface::class);
 		$this->appEnv = $this->container->get(ApplicationEnvironmentVarVisitor::class);
+	}
+
+	public function registerServerErrorControllerProvider(SafeRequestHandlerServerErrorControllerProvider $serverErrorControllerProvider): self
+	{
+		$this->serverErrorControllerProvider = $serverErrorControllerProvider;
+
+		return $this;
 	}
 
 	public function registerErrorHandler(callable $errorHandlerFunction): self
@@ -80,9 +88,9 @@ final class SafeRequestHandler implements RequestHandlerInterface
 		$accept = $serverRequest->getHeaderLine('Accept');
 
 		$controllerClass = match (true) {
-			str_contains($accept, 'application/json') => ServerErrorJsonController::class,
-			str_contains($accept, 'text/html') => ServerErrorHtmlController::class,
-			default => ServerErrorHtmlController::class
+			str_contains($accept, 'application/json') => $this->serverErrorControllerProvider->getJsonServerErrorController(),
+			str_contains($accept, 'text/html') => $this->serverErrorControllerProvider->getHtmlServerErrorController(),
+			default => $this->serverErrorControllerProvider->getHtmlServerErrorController()
 		};
 
 		/** @var RequestHandlerInterface $controller */
