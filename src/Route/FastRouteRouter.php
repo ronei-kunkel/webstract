@@ -23,7 +23,9 @@ final class FastRouteRouter implements RouteResolver
 		private readonly RouteProviderInterface $customRouteProvider,
 		private readonly RouterOutputProvider $routerOutputProvider,
 		private readonly RouteProviderInterface $baseRouteProvider,
-	) {}
+	) {
+		$this->fwRouteDefinitionPatterns = [];
+	}
 
 	public function resolve(ServerRequestInterface $serverRequest): RouterOutput
 	{
@@ -47,7 +49,7 @@ final class FastRouteRouter implements RouteResolver
 
 		foreach ($this->customRouteProvider->provideRouteDefinitions() as $routeDefinition) {
 			$routePattern = $routeDefinition::getPattern();
-			if(in_array($routePattern, $this->fwRouteDefinitionPatterns)) {
+			if (in_array($routePattern, $this->fwRouteDefinitionPatterns)) {
 				throw new RoutePatternOverrideException("The route definition `{$routeDefinition}` has pattern `{$routePattern}` that is reserved by framework.");
 			}
 			$c->addRoute($routeDefinition::getMethod()->value, $routePattern, $routeDefinition::getController());
