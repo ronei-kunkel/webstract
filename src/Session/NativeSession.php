@@ -35,12 +35,22 @@ final class NativeSession implements SessionHandler
 
 		$value = $_SESSION[$key->getName()];
 
-		$unserializedObject = @unserialize($value);
-		if (!$unserializedObject) {
-			return $value;
+		if($this->maybeIsObject($value)) {
+			$unserializedObject = @unserialize($value);
+
+			if ($unserializedObject === false) {
+				return $value;
+			}
+
+			return $unserializedObject;
 		}
 
-		return $unserializedObject;
+		return $value;
+	}
+
+	private function maybeIsObject(string $value): bool
+	{
+		return preg_match('/^O:\d+:/', $value) === 1;
 	}
 
 	public function getOrDefault(SessionKeyInterface $key, mixed $default = null): mixed
@@ -49,14 +59,7 @@ final class NativeSession implements SessionHandler
 			return $default;
 		}
 
-		$value = $_SESSION[$key->getName()];
-
-		$unserializedObject = @unserialize($value);
-		if (!$unserializedObject) {
-			return $value;
-		}
-
-		return $unserializedObject;
+		return $this->get($key);
 	}
 
 	public function set(SessionKeyInterface $key, mixed $value): void
