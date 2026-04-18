@@ -35,7 +35,7 @@ final class NativeSession implements SessionHandler
 
 		$value = $_SESSION[$key->getName()];
 
-		if(is_int($value)) {
+		if(!is_string($value)) {
 			return $value;
 		}
 
