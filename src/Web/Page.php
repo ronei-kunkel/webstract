@@ -19,11 +19,5 @@ abstract class Page
 		return 'page';
 	}
 
-	public function context(): array
-	{
-		return [
-			$this->contextKey() => $this,
-			...$this->content->context()
-		];
-	}
+	abstract public function context(): array;
 }
