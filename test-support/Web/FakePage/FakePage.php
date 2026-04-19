@@ -37,12 +37,12 @@ final class FakePage extends Page
 		return __DIR__ . '/FakePage.html';
 	}
 
-	public function getContext(): array
+	public function context(): array
 	{
 		return [
 			$this->contextKey() => $this,
-			$this->content->contextKey() => $this->content,
-			$this->fakeComponent->contextKey() => $this->fakeComponent,
+			...$this->fakeComponent->context(),
+			...$this->content->context(),
 		];
 	}
 }
