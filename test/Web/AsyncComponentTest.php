@@ -16,7 +16,7 @@ class AsyncComponentTest extends TestCase
 		];
 		$component = new FakeNonRenderableAsyncComponent('title');
 
-		$this->assertEquals($expectedContext, $component->getContext());
+		$this->assertEquals($expectedContext, $component->context());
 		$this->assertEquals('component', $component->contextKey());
 	}
 }

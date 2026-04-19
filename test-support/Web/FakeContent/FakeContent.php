@@ -13,6 +13,11 @@ final class FakeContent extends Content
 		public readonly string $paragraph,
 	) {}
 
+	protected function componentsContext(): array
+	{
+		return [];
+	}
+
 	public function tabTitle(): string
 	{
 		return 'Content Tab Title';

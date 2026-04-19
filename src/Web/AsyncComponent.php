@@ -13,11 +13,4 @@ abstract class AsyncComponent extends Component
 	{
 		return 'component';
 	}
-
-	public function getContext(): array
-	{
-		return [
-			$this->contextKey() => $this
-		];
-	}
 }
