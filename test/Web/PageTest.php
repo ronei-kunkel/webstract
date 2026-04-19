@@ -18,6 +18,6 @@ class PageTest extends TestCase
 		];
 		$page = new FakePage(new FakeContent(['1','2'], 'paragraph'), new FakeComponent('text'));
 
-		$this->assertEquals($expectedContext, $page->getContext());
+		$this->assertEquals($expectedContext, $page->context());
 	}
 }

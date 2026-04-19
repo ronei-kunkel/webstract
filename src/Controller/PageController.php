@@ -23,7 +23,7 @@ abstract class PageController implements Controller
 	protected function createHtmlResponse(Page $page): ResponseInterface
 	{
 		$this->stream->write(
-			$this->templateEngine->render($page->htmlPath(), $page->getContext())
+			$this->templateEngine->render($page->htmlPath(), $page->context())
 		);
 
 		return $this->response
