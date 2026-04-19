@@ -34,7 +34,7 @@ abstract class AsyncComponentController implements Controller
 	protected function createHtmlResponse(AsyncComponent $component): ResponseInterface
 	{
 		$content = $component->shouldRendered()
-			? $this->templateEngine->render($component->htmlPath(), $component->getContext())
+			? $this->templateEngine->render($component->htmlPath(), $component->context())
 			: file_get_contents($component->htmlPath());
 
 		$this->stream->write($content);

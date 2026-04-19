@@ -20,7 +20,10 @@ abstract class Content
 	public function context(): array
 	{
 		return [
-			$this->contextKey() => $this
+			$this->contextKey() => $this,
+			...$this->componentsContext(),
 		];
 	}
+
+	abstract protected function componentsContext(): array;
 }

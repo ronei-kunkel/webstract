@@ -10,6 +10,12 @@ abstract class Component
 	abstract public function jsPath(): ?string;
 	abstract public function htmlPath(): string;
 
-	/** Must diferent from each concrete component */
 	abstract public function contextKey(): string;
+
+	public function context(): array
+	{
+		return [
+			$this->contextKey() => $this
+		];
+	}
 }
