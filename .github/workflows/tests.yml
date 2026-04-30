@@ -20,5 +20,8 @@ jobs:
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
-      - name: Tests
+      - name: Unit Tests
         run: composer test
+
+      - name: Infrastructure Tests
+        run: composer test:infra

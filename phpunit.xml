@@ -11,8 +11,12 @@
          displayDetailsOnPhpunitDeprecations="true"
 >
     <testsuites>
-        <testsuite name="Test Suite">
+        <testsuite name="Unit">
             <directory suffix="Test.php">./test</directory>
+            <exclude>./test/Integration</exclude>
+        </testsuite>
+        <testsuite name="Integration">
+            <directory suffix="Test.php">./test/Integration</directory>
         </testsuite>
     </testsuites>
     <source>
