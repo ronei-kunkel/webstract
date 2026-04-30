@@ -17,6 +17,7 @@ use Webstract\Controller\AsyncComponentController;
 use Webstract\Controller\Traits\AsyncRedirectableResponse;
 use Webstract\Session\SessionHandler;
 use Webstract\TemplateEngine\TemplateEngineRenderer;
+use Webstract\Web\AsyncComponent;
 
 class AsyncComponentControllerTest extends TestCase
 {
@@ -97,5 +98,59 @@ class AsyncComponentControllerTest extends TestCase
 
 		$this->assertEquals($expectedResponse, $controllerResponse);
 		$this->assertEquals('<h1>RENDERABLE</h1>', (string) $controllerResponse->getBody());
+	}
+
+	public function test_createHtmlResponse_ShouldRenderWhenComponentAllowsRendering(): void
+	{
+		$response = self::$psr17Factory->createResponse();
+		$stream = self::$psr17Factory->createStream();
+		$session = $this->createStub(SessionHandler::class);
+		$serverRequest = $this->createStub(ServerRequestInterface::class);
+		$templateEngine = $this->createMock(TemplateEngineRenderer::class);
+		$templateEngine->expects($this->once())->method('render')->with('/fake/path.html', ['name' => 'John'])->willReturn('<h1>rendered</h1>');
+
+		$component = $this->createMock(AsyncComponent::class);
+		$component->method('shouldRendered')->willReturn(true);
+		$component->method('htmlPath')->willReturn('/fake/path.html');
+		$component->method('context')->willReturn(['name' => 'John']);
+
+		$controller = new class ($response, $stream, $session, $templateEngine, $component) extends AsyncComponentController {
+			public function __construct($response, $stream, $session, $templateEngine, private readonly AsyncComponent $component) { parent::__construct($response, $stream, $session, $templateEngine); }
+			public function middlewares(): array { return []; }
+			public function handle(ServerRequestInterface $serverRequest): ResponseInterface { return $this->createHtmlResponse($this->component); }
+		};
+
+		$controllerResponse = $controller->handle($serverRequest);
+		$this->assertSame(200, $controllerResponse->getStatusCode());
+		$this->assertSame('text/html; charset=utf-8', $controllerResponse->getHeaderLine('Content-Type'));
+		$this->assertSame('<h1>rendered</h1>', (string) $controllerResponse->getBody());
+	}
+
+	public function test_createHtmlResponse_ShouldNotRenderWhenComponentDisablesRendering(): void
+	{
+		$response = self::$psr17Factory->createResponse();
+		$stream = self::$psr17Factory->createStream();
+		$session = $this->createStub(SessionHandler::class);
+		$serverRequest = $this->createStub(ServerRequestInterface::class);
+		$templateEngine = $this->createMock(TemplateEngineRenderer::class);
+		$templateEngine->expects($this->never())->method('render');
+		$tempFile = tempnam(sys_get_temp_dir(), 'async-component');
+		file_put_contents($tempFile, '<h1>raw</h1>');
+
+		$component = $this->createMock(AsyncComponent::class);
+		$component->method('shouldRendered')->willReturn(false);
+		$component->method('htmlPath')->willReturn($tempFile);
+		$component->method('context')->willReturn([]);
+
+		$controller = new class ($response, $stream, $session, $templateEngine, $component) extends AsyncComponentController {
+			public function __construct($response, $stream, $session, $templateEngine, private readonly AsyncComponent $component) { parent::__construct($response, $stream, $session, $templateEngine); }
+			public function middlewares(): array { return []; }
+			public function handle(ServerRequestInterface $serverRequest): ResponseInterface { return $this->createHtmlResponse($this->component); }
+		};
+
+		$controllerResponse = $controller->handle($serverRequest);
+		$this->assertSame(200, $controllerResponse->getStatusCode());
+		$this->assertSame('<h1>raw</h1>', (string) $controllerResponse->getBody());
+		unlink($tempFile);
 	}
 }
