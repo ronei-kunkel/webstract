@@ -50,6 +50,7 @@ class DownloadableActionControllerTest extends TestCase
 
 		$this->assertEquals($expectedResponse, $controllerResponse);
 		$this->assertEquals('', (string) $controllerResponse->getBody());
+		$this->assertSame(500, $controllerResponse->getStatusCode());
 	}
 
 	public function test_AssertMethod_createDownloadResponse_Return500WhenFileHaveNoExtension(): void
@@ -66,6 +67,7 @@ class DownloadableActionControllerTest extends TestCase
 
 		$this->assertEquals($expectedResponse, $controllerResponse);
 		$this->assertEquals('', (string) $controllerResponse->getBody());
+		$this->assertSame(500, $controllerResponse->getStatusCode());
 	}
 
 	public function test_AssertMethod_createDownloadResponse_ReturnDownloadableAttachment(): void
@@ -87,6 +89,8 @@ class DownloadableActionControllerTest extends TestCase
 
 		$this->assertEquals($expectedResponse, $controllerResponse);
 		$this->assertEquals('content of file with content', (string) $controllerResponse->getBody());
+		$this->assertSame(200, $controllerResponse->getStatusCode());
+		$this->assertSame('attachment; filename=\"file-with-content.txt\"', $controllerResponse->getHeaderLine('Content-Disposition'));
 	}
 
 	public function test_AssertMethod_createPdfContentDownloadableResponse_ReturnDownloadablePdfAttachment(): void
@@ -120,5 +124,7 @@ class DownloadableActionControllerTest extends TestCase
 			%%EOF
 
 			PDF, (string) $controllerResponse->getBody());
+		$this->assertSame(200, $controllerResponse->getStatusCode());
+		$this->assertSame('application/pdf', $controllerResponse->getHeaderLine('Content-Type'));
 	}
 }
