@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Test\Storage;
 
+use PHPUnit\Framework\Attributes\Group;
 use Test\TestCase;
 use Webstract\Storage\Path;
 
+#[Group('infra')]
 final class PathTest extends TestCase
 {
     public function testItResolvesPreviousPathHierarchy(): void

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Test\Database;
 
+use PHPUnit\Framework\Attributes\Group;
 use Test\TestCase;
 use Webstract\Database\DatabasePdoConnector;
 use Webstract\Env\Visitor\DatabaseEnvironmentVarVisitor;
 
+#[Group('infra')]
 final class DatabasePdoConnectorTest extends TestCase
 {
     private string $dsn;

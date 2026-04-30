@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Test\Session;
 
 use stdClass;
+use PHPUnit\Framework\Attributes\Group;
 use Test\TestCase;
 use Webstract\Session\Exception\SessionValueNotFoundException;
 use Webstract\Session\NativeSession;
 use Webstract\Session\SessionKeyInterface;
 
+#[Group('infra')]
 final class NativeSessionTest extends TestCase
 {
     private NativeSession $session;
