@@ -43,6 +43,7 @@
         "guzzlehttp/guzzle": "^7.10"
     },
     "scripts": {
-        "test": "vendor/bin/phpunit test --do-not-cache-result --no-progress --colors=never"
+        "test": "vendor/bin/phpunit --testsuite Unit --exclude-group integration test --do-not-cache-result --no-progress --colors=never",
+        "test:integration": "vendor/bin/phpunit --testsuite Integration --group integration --do-not-cache-result --no-progress --colors=never"
     }
 }
