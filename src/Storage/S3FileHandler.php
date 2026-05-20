@@ -18,6 +18,7 @@ use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Log\LoggerInterface;
+use Webstract\Storage\Object\Image\InlineStandardImageForStream;
 
 final class S3FileHandler implements FileHandler
 {
@@ -49,9 +50,22 @@ final class S3FileHandler implements FileHandler
 		return $contents;
 	}
 
+	public function removeObject(UriInterface $uri): void
+	{
+		$this->client->delete($uri);
+	}
+
 	public function uploadInlineImage(UploadedFileInterface $file): UriInterface
 	{
 		$object = new InlineStandardImage($file);
+		$result = $this->client->upload($object);
+		$this->logger->info('Object uploaded', $result->toArray());
+		return $this->client->composeImageUri($object);
+	}
+
+	public function uploadInlineImageFromStream(StreamInterface $stream, string $name, string $extension): UriInterface
+	{
+		$object = new InlineStandardImageForStream($stream, $name, $extension);
 		$result = $this->client->upload($object);
 		$this->logger->info('Object uploaded', $result->toArray());
 		return $this->client->composeImageUri($object);

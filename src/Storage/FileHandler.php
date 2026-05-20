@@ -20,8 +20,10 @@ interface FileHandler
 	);
 
 	public function listObjectsFromPath(Path $path): array;
+	public function removeObject(UriInterface $uri): void;
 
 	public function uploadInlineImage(UploadedFileInterface $file): UriInterface;
+	public function uploadInlineImageFromStream(StreamInterface $stream, string $name, string $extension): UriInterface;
 	public function resolveImageUri(string $image): UriInterface;
 
 	public function uploadDatabaseBackup(StreamInterface $stream): void;

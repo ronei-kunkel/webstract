@@ -69,6 +69,20 @@ final class LocalStack implements Client
 		return $result;
 	}
 
+	public function delete(UriInterface $uri): Result
+	{
+		$args = [
+			'Bucket' => $this->fsEnv->getFileStorageBucketName(),
+			'Key' => $uri->getPath(),
+		];
+
+		$result = $this->s3->deleteObject($args);
+
+		$this->logger->info('Object removed', ['args' => $args, 'result' => $result->toArray()]);
+
+		return $result;
+	}
+
 	public function download(FileObject $object): ResponseInterface
 	{
 		$uri = new Uri(sprintf(
