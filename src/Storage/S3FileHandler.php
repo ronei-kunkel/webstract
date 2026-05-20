@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Webstract\Storage;
 
+use Override;
 use Webstract\Storage\Client\Client;
 use Webstract\Storage\Client\LocalStack;
 use Webstract\Storage\Client\Oracle;
@@ -18,6 +19,7 @@ use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Log\LoggerInterface;
+use Webstract\Storage\Client\ObjectKey;
 use Webstract\Storage\Object\Image\InlineStandardImageForStream;
 
 final class S3FileHandler implements FileHandler
@@ -50,25 +52,30 @@ final class S3FileHandler implements FileHandler
 		return $contents;
 	}
 
-	public function removeObject(UriInterface $uri): void
+	public function removeObject(string $objectKey): void
 	{
-		$this->client->delete($uri);
+		$objectKey = new ObjectKey($objectKey);
+		$this->client->delete($objectKey);
 	}
 
 	public function uploadInlineImage(UploadedFileInterface $file): UriInterface
 	{
 		$object = new InlineStandardImage($file);
-		$result = $this->client->upload($object);
-		$this->logger->info('Object uploaded', $result->toArray());
-		return $this->client->composeImageUri($object);
+		$objectKey = $this->client->upload($object);
+		return $this->client->getPublicUrl($objectKey);
 	}
 
-	public function uploadInlineImageFromStream(StreamInterface $stream, string $name, string $extension): UriInterface
+	public function uploadInlineImageFromStream(StreamInterface $stream, string $name, string $extension): string
 	{
 		$object = new InlineStandardImageForStream($stream, $name, $extension);
-		$result = $this->client->upload($object);
-		$this->logger->info('Object uploaded', $result->toArray());
-		return $this->client->composeImageUri($object);
+		$objectKey = $this->client->upload($object);
+		return $objectKey->getValue();
+	}
+
+	public function composePublicUrl(string $objectKey): UriInterface
+	{
+		$objectKey  = new ObjectKey($objectKey);
+		return $this->client->getPublicUrl($objectKey);
 	}
 
 	public function resolveImageUri(string $name): UriInterface

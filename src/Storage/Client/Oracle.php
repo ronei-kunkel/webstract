@@ -12,9 +12,11 @@ use Webstract\Env\Visitor\ApplicationEnvironmentVarVisitor;
 use Webstract\Env\Visitor\FileStorageEnvironmentVarVisitor;
 use GuzzleHttp\Client as HttpClient;
 use Nyholm\Psr7\Uri;
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Log\LoggerInterface;
+use Webstract\Storage\Object\Image\ComposableImage;
 
 final class Oracle implements Client
 {
@@ -64,12 +66,13 @@ final class Oracle implements Client
 		return $result;
 	}
 
-	public function upload(FileObject $object): Result
+	public function upload(FileObject $object): ObjectKey
 	{
+		$objectKey = "{$this->environmentPrefix}/{$object->getObjectName()}";
 		$args = [
 			'Body' => $object->getBody(),
 			'Bucket' => $this->bucketName,
-			'Key' => "{$this->environmentPrefix}/{$object->getObjectName()}",
+			'Key' => $objectKey,
 			'StorageClass' => $object->getStorageClass(),
 			'ContentType' => $object->getContentType(),
 			...$object->shouldDisposedInline() ? ['ContentDisposition' => 'inline'] : []
@@ -78,21 +81,32 @@ final class Oracle implements Client
 
 		$this->logger->info('Object uploaded', ['args' => $args, 'result' => $result->toArray()]);
 
-		return $result;
+		return new ObjectKey($objectKey);
 	}
 
-	public function delete(UriInterface $uri): Result
+	public function delete(ObjectKey $objectKey): void
 	{
 		$args = [
 			'Bucket' => $this->fsEnv->getFileStorageBucketName(),
-			'Key' => ltrim($uri->getPath(), '/'),
+			'Key' => $objectKey->getValue(),
 		];
 
 		$result = $this->s3->deleteObject($args);
 
 		$this->logger->info('Object removed', ['args' => $args, 'result' => $result->toArray()]);
+	}
 
-		return $result;
+	public function getPublicUrl(ObjectKey $objectKey): UriInterface
+	{
+		return new Uri(sprintf(
+			'https://%s.objectstorage.%s.oci.customer-oci.com/p/%s/n/%s/b/%s/o/%s',
+			$this->bucketNamespace,
+			$this->region,
+			$this->appEnv->isDevEnv() ? self::DEV_PREAUTH_READ_IMAGES_KEY : self::PROD_PREAUTH_READ_IMAGES_KEY,
+			$this->bucketNamespace,
+			$this->bucketName,
+			$objectKey->getValue(),
+		));
 	}
 
 	public function download(FileObject $object): ResponseInterface
