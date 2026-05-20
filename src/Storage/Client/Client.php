@@ -23,6 +23,8 @@ interface Client
 	public function listObjects(string $prefix): Result;
 	/** @see - https://docs.aws.amazon.com/aws-sdk-php/v3/api/api-s3-2006-03-01.html#putobject */
 	public function upload(FileObject $object): Result;
+	/** @see - https://docs.aws.amazon.com/aws-sdk-php/v3/api/api-s3-2006-03-01.html#deleteobject */
+	public function delete(UriInterface $uri): Result;
 	public function composeImageUri(FileObject $object): UriInterface;
 	public function download(FileObject $object): ResponseInterface;
 }
