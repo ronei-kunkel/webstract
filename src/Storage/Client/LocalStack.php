@@ -52,12 +52,13 @@ final class LocalStack implements Client
 		return $result;
 	}
 
-	public function upload(FileObject $object): Result
+	public function upload(FileObject $object): ObjectKey
 	{
+		$objectKey = "{$this->environmentPrefix}/{$object->getObjectName()}";
 		$args = [
 			'Body' => $object->getBody(),
 			'Bucket' => $this->fsEnv->getFileStorageBucketName(),
-			'Key' => "{$this->environmentPrefix}/{$object->getObjectName()}",
+			'Key' => $objectKey,
 			'StorageClass' => $object->getStorageClass(),
 			'ContentType' => $object->getContentType(),
 			...$object->shouldDisposedInline() ? ['ContentDisposition' => 'inline'] : []
@@ -66,21 +67,28 @@ final class LocalStack implements Client
 
 		$this->logger->info('Object uploaded', ['args' => $args, 'result' => $result->toArray()]);
 
-		return $result;
+		return new ObjectKey($objectKey);
 	}
 
-	public function delete(UriInterface $uri): Result
+	public function getPublicUrl(ObjectKey $objectKey): UriInterface
+	{
+		return new Uri(sprintf(
+			'http://localhost:4566/%s/%s',
+			$this->fsEnv->getFileStorageBucketName(),
+			$objectKey->getValue()
+		));
+	}
+
+	public function delete(ObjectKey $objectKey): void
 	{
 		$args = [
 			'Bucket' => $this->fsEnv->getFileStorageBucketName(),
-			'Key' => ltrim($uri->getPath(), '/'),
+			'Key' => $objectKey->getValue(),
 		];
 
 		$result = $this->s3->deleteObject($args);
 
 		$this->logger->info('Object removed', ['args' => $args, 'result' => $result->toArray()]);
-
-		return $result;
 	}
 
 	public function download(FileObject $object): ResponseInterface
