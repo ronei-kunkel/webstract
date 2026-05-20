@@ -6,7 +6,6 @@ namespace Webstract\Storage\Client;
 
 use Webstract\Storage\Object\FileObject;
 use Aws\Result;
-use Webstract\Env\Visitor\ApplicationEnvironmentVarVisitor;
 use Webstract\Env\Visitor\FileStorageEnvironmentVarVisitor;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
@@ -15,7 +14,6 @@ use Psr\Log\LoggerInterface;
 interface Client
 {
 	public function __construct(
-		ApplicationEnvironmentVarVisitor $appEnv,
 		FileStorageEnvironmentVarVisitor $fsEnv,
 		LoggerInterface $log,
 	);

@@ -74,6 +74,12 @@ final class EnvVarVisitor implements
 		return $this->environmentHandler->getVar(EnvVar::DB_PASS);
 	}
 
+	public function fileStorageIsDevEnv(): bool
+	{
+		$env = $this->environmentHandler->getVarOrDefault(EnvVar::FILE_STORAGE_ENV, 'prod');
+		return $env !== 'prod';
+	}
+
 	public function getFileStoragePublicApiKey(): string
 	{
 		return $this->environmentHandler->getVar(EnvVar::FILE_STORAGE_PUBLIC_API_KEY);
@@ -99,9 +105,14 @@ final class EnvVarVisitor implements
 		return $this->environmentHandler->getVar(EnvVar::FILE_STORAGE_BUCKET_NAMESPACE);
 	}
 
-	public function getFileStorageBucketBackupPrefixPreAuthKey(): string
+	public function getFileStoragePreauthReadImages(): string
 	{
-		return $this->environmentHandler->getVar(EnvVar::FILE_STORAGE_BUCKET_BACKUP_PREFIX_PRE_AUTH_KEY);
+		return $this->environmentHandler->getVar(EnvVar::FILE_STORAGE_PREAUTH_READ_IMAGES_KEY);
+	}
+
+	public function getFileStoragePreauthReadBackups(): string
+	{
+		return $this->environmentHandler->getVar(EnvVar::FILE_STORAGE_PREAUTH_READ_BACKUPS_KEY);
 	}
 
 	public function getLogApiKey(): string
