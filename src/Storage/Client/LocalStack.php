@@ -73,7 +73,7 @@ final class LocalStack implements Client
 	{
 		$args = [
 			'Bucket' => $this->fsEnv->getFileStorageBucketName(),
-			'Key' => $uri->getPath(),
+			'Key' => ltrim($uri->getPath(), '/'),
 		];
 
 		$result = $this->s3->deleteObject($args);
