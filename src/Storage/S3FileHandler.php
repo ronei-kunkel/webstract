@@ -32,8 +32,8 @@ final class S3FileHandler implements FileHandler
 		private readonly LoggerInterface $logger,
 	) {
 		$this->client = $this->appEnv->isDevEnv()
-			? new LocalStack($this->appEnv, $this->fsEnv, $this->logger)
-			: new Oracle($this->appEnv, $this->fsEnv, $this->logger);
+			? new LocalStack($this->fsEnv, $this->logger)
+			: new Oracle($this->fsEnv, $this->logger);
 	}
 
 	public function listObjectsFromPath(Path $path): array
