@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Test\Controller;
 
+use JsonSerializable;
 use Nyholm\Psr7\Factory\Psr17Factory;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Test\Support\Controller\FakeApiControllerWithContent;
 use Test\Support\Controller\FakeApiControllerWithEmptyContent;
 use Test\Support\Controller\FakeApiControllerWithoutContent;
 use Test\TestCase;
+use Webstract\Controller\ApiController;
 
 class ApiControllerTest extends TestCase
 {
@@ -64,43 +68,93 @@ class ApiControllerTest extends TestCase
 		$this->assertEquals('{"message":"Hello, World!"}', (string) $controllerResponse->getBody());
 	}
 
-	
+	public function test_middlewaresContract_ShouldKeepOrderTypeAndDefaultEmptyList(): void
+	{
+		$serverRequest = $this->createStub(ServerRequestInterface::class);
+		$middlewareA = $this->createStub(MiddlewareInterface::class);
+		$middlewareB = $this->createStub(MiddlewareInterface::class);
+		$response = self::$psr17Factory->createResponse();
+		$stream = self::$psr17Factory->createStream();
+
+		$controllerWithDefault = new class ($response, $stream) extends ApiController {
+			public function middlewares(): array
+			{
+				return [];
+			}
+
+			public function handle(ServerRequestInterface $serverRequest): ResponseInterface
+			{
+				return $this->createJsonResponse();
+			}
+		};
+
+		$controllerWithMiddlewares = new class ($response, $stream, $middlewareA, $middlewareB) extends ApiController {
+			/** @var MiddlewareInterface[] */
+			private array $middlewares;
+
+			public function __construct(ResponseInterface $response, \Psr\Http\Message\StreamInterface $stream, MiddlewareInterface ...$middlewares)
+			{
+				parent::__construct($response, $stream);
+				$this->middlewares = $middlewares;
+			}
+
+			public function middlewares(): array
+			{
+				return $this->middlewares;
+			}
+
+			public function handle(ServerRequestInterface $serverRequest): ResponseInterface
+			{
+				return $this->createJsonResponse();
+			}
+		};
+
+		$this->assertSame([], $controllerWithDefault->middlewares());
+		$this->assertSame([$middlewareA, $middlewareB], $controllerWithMiddlewares->middlewares());
+		$this->assertContainsOnlyInstancesOf(MiddlewareInterface::class, $controllerWithMiddlewares->middlewares());
+		$controllerWithDefault->handle($serverRequest);
+	}
+
+	public function test_createJsonResponse_ShouldHandleEdgeCasePayloads(): void
+	{
+		$response = self::$psr17Factory->createResponse();
+		$stream = self::$psr17Factory->createStream();
+
+		$jsonSerializable = new class implements JsonSerializable {
+			public function jsonSerialize(): mixed
+			{
+				return ['status' => 'success'];
+			}
+		};
+
+		$controller = new class ($response, $stream) extends ApiController {
+			public function middlewares(): array { return []; }
+			public function handle(ServerRequestInterface $serverRequest): ResponseInterface { return $this->createJsonResponse(); }
+			public function exposeCreateJsonResponse(array|JsonSerializable|null $content = null, int $statusCode = 200): ResponseInterface
+			{
+				return $this->createJsonResponse($content, $statusCode);
+			}
+		};
+
+		$this->assertSame('', (string) $controller->exposeCreateJsonResponse([])->getBody());
+		$this->assertSame('{"status":"success"}', (string) $controller->exposeCreateJsonResponse($jsonSerializable)->getBody());
+	}
+
+	public function test_createJsonResponse_ShouldThrowForInvalidTypes(): void
+	{
+		$response = self::$psr17Factory->createResponse();
+		$stream = self::$psr17Factory->createStream();
+
+		$controller = new class ($response, $stream) extends ApiController {
+			public function middlewares(): array { return []; }
+			public function handle(ServerRequestInterface $serverRequest): ResponseInterface { return $this->createJsonResponse(); }
+			public function exposeCreateJsonResponseUnsafe(mixed $content): ResponseInterface
+			{
+				return $this->createJsonResponse($content);
+			}
+		};
+
+		$this->expectException(\TypeError::class);
+		$controller->exposeCreateJsonResponseUnsafe('invalid');
+	}
 }
-
-// test('should works properly', function () {
-// 	$pdfGenerator = new DompdfPdfGenerator(new TwigTemplateEngineRenderer());
-	
-// 	$controller = new FakeApiController($this->response, $this->stream, $pdfGenerator);
-
-// 	$result = $controller->handle($this->serverRequest);
-
-// 	expect($result)->toBeInstanceOf(ResponseInterface::class);
-// 	expect((string) $result->getBody())->toBe('{"message":"Hello, World!"}');
-// 	expect($result->getHeaders())->toBe(['Content-Type' => ['application/json']]);
-// 	expect($result->getStatusCode())->toBe(200);
-// });
-
-// test('createJsonResponse handles expected entries gracefully', function (mixed $expectedContent, string $expectedBodyResult) {
-// 	$pdfGenerator = new DompdfPdfGenerator(new TwigTemplateEngineRenderer());
-	
-// 	$controller = new FakeApiController($this->response, $this->stream, $pdfGenerator);
-
-// 	$result = $controller->testCreateJsonResponse($expectedContent);
-
-// 	expect($result)->toBeInstanceOf(ResponseInterface::class);
-// 	expect((string) $result->getBody())->toBe($expectedBodyResult);
-// 	expect($result->getHeaders())->toBe(['Content-Type' => ['application/json']]);
-// 	expect($result->getStatusCode())->toBe(200);
-// })->with([
-// 	[null, ''],
-// 	[['number' => 1], '{"number":1}'],
-// 	[new JsonSerializableClass(), '{"status":"success"}']
-// ]);
-
-// test('createJsonResponse throw exception when value not handable', function (mixed $expectedContent) {
-// 	$pdfGenerator = new DompdfPdfGenerator(new TwigTemplateEngineRenderer());
-	
-// 	$controller = new FakeApiController($this->response, $this->stream, $pdfGenerator);
-
-// 	$controller->testCreateJsonResponse($expectedContent);
-// })->with([1, '', '1', new stdClass()])->throws(TypeError::class);

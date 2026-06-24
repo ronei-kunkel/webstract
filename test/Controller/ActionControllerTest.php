@@ -44,5 +44,7 @@ class ActionControllerTest extends TestCase
 
 		$this->assertEquals($expectedResponse, $controllerResponse);
 		$this->assertEquals('', (string) $controllerResponse->getBody());
+		$this->assertSame(303, $controllerResponse->getStatusCode());
+		$this->assertSame('/', $controllerResponse->getHeaderLine('Location'));
 	}
 }
