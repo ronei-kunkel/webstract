@@ -56,7 +56,8 @@ final class CommandProvider implements CommandProviderInterface
 		$newCommands = array_keys($this->commands);
 
 		foreach ($newCommands as $newCommand) {
-			if ($newCommand instanceof Command) {
+			$commandClass = $this->commands[$newCommand];
+			if (is_subclass_of($commandClass, Command::class)) {
 				continue;
 			}
 
